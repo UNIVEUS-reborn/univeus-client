@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc -b && vite build",
+    "relay": "relay-compiler",
+    "build": "relay-compiler && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
     "check-types": "tsc -b",
@@ -20,7 +21,9 @@
     "@stackflow/react": "^2.1.4",
     "@stylexjs/stylex": "^0.19.1",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "react-relay": "^21.0.1",
+    "relay-runtime": "^21.0.1"
   },
   "devDependencies": {
     "@stylexjs/unplugin": "^0.19.1",
@@ -28,9 +31,12 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "graphql": "^17.1.0",
     "oxlint": "^1.90.0",
+    "relay-compiler": "^21.0.1",
     "typescript": "~7.0.2",
     "vite": "^8.3.6",
+    "vite-plugin-relay-lite": "^0.12.0",
     "vitest": "^5.1.0"
   }
 }
