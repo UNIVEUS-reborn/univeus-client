@@ -1,7 +1,359 @@
+scalar DateTime
+
 interface Node {
   id: ID!
 }
 
+type PageInfo {
+  startCursor: ID
+  endCursor: ID
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+"""
+예상하지 못한 서버 에러
+"""
+type UnexpectedError {
+  message: String!
+}
+
+type Image {
+  url: String!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+"""
+단과대학
+"""
+enum College {
+  """
+  인문대학
+  """
+  HUMANITIES
+  """
+  예술체육대학
+  """
+  ARTS_AND_PHYSICAL_EDUCATION
+  """
+  사회과학대학
+  """
+  SOCIAL_SCIENCES
+  """
+  소프트웨어경영대학
+  """
+  SOFTWARE_AND_BUSINESS
+  """
+  융합과학대학
+  """
+  CONVERGENCE_SCIENCE
+  """
+  창의공과대학
+  """
+  CREATIVE_ENGINEERING
+  """
+  관광문화대학
+  """
+  TOURISM_AND_CULTURE
+}
+
+"""
+유저
+"""
+type User implements Node {
+  id: ID!
+  _id: ID!
+  nickname: String!
+  profileImage: Image
+  gender: Gender!
+  """
+  입학 연도 (예: 2019)
+  """
+  admissionYear: Int!
+  college: College!
+}
+
+"""
+모임 카테고리
+"""
+enum GroupCategory {
+  """
+  우주공강
+  """
+  FREE_PERIOD
+  """
+  스펙쌓기
+  """
+  CAREER
+  """
+  취미/문화
+  """
+  HOBBY_CULTURE
+  """
+  습관형성
+  """
+  HABIT
+  """
+  맛집탐방
+  """
+  FOOD
+  """
+  취업활동
+  """
+  JOB_HUNTING
+  """
+  수업친구
+  """
+  CLASS_FRIEND
+  """
+  기타모임
+  """
+  ETC
+}
+
+"""
+참여 승인 방식
+"""
+enum ParticipationMethod {
+  """
+  신청 즉시 참여
+  """
+  AUTO_APPROVAL
+  """
+  호스트 승인 후 참여
+  """
+  MANUAL_APPROVAL
+}
+
+"""
+참여 가능 성별
+"""
+enum GenderRestriction {
+  ANY
+  MALE_ONLY
+  FEMALE_ONLY
+}
+
+"""
+모집 상태
+"""
+enum GroupStatus {
+  RECRUITING
+  """
+  호스트가 직접 마감
+  """
+  CLOSED_BY_HOST
+  """
+  정원 도달
+  """
+  CLOSED_FULL
+  """
+  모임 3시간 전 자동 마감
+  """
+  CLOSED_DEADLINE
+}
+
+"""
+조회한 사람(viewer)과 모임의 관계
+"""
+enum GroupViewerRole {
+  HOST
+  PARTICIPANT
+  """
+  수동 승인 대기 중
+  """
+  PENDING
+  NONE
+}
+
+"""
+모임
+"""
+type Group implements Node {
+  id: ID!
+  _id: ID!
+  title: String!
+  content: String!
+  category: GroupCategory!
+  images: [Image!]!
+  """
+  모임 일시
+  """
+  meetingAt: DateTime!
+  """
+  모집 마감 일시 (모임 3시간 전)
+  """
+  recruitDeadlineAt: DateTime!
+  location: String!
+  """
+  정원 (호스트 포함)
+  """
+  capacity: Int!
+  """
+  현재 참여 인원 (호스트 포함)
+  """
+  participantCount: Int!
+  participationMethod: ParticipationMethod!
+  genderRestriction: GenderRestriction!
+  status: GroupStatus!
+  host: User!
+  viewerRole: GroupViewerRole!
+  createdAt: DateTime!
+}
+
+type GroupConnection {
+  edges: [GroupEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type GroupEdge {
+  node: Group!
+  cursor: ID!
+}
+
 type Query {
   node(id: ID!): Node
+  """
+  홈 목록. category가 null이면 전체
+  """
+  groups(category: GroupCategory, first: Int, after: ID): GroupConnection!
+  searchGroups(query: String!, first: Int, after: ID): GroupConnection!
+  group(groupId: ID!): Group
 }
+
+type Mutation {
+  createGroup(input: CreateGroupInput!): CreateGroupResult!
+  updateGroup(input: UpdateGroupInput!): UpdateGroupResult!
+  closeGroup(input: CloseGroupInput!): CloseGroupResult!
+  deleteGroup(input: DeleteGroupInput!): DeleteGroupResult!
+  createImageUploadUrl(input: CreateImageUploadUrlInput!): CreateImageUploadUrlResult!
+}
+
+input CreateGroupInput {
+  title: String!
+  content: String!
+  category: GroupCategory!
+  meetingAt: DateTime!
+  location: String!
+  capacity: Int!
+  participationMethod: ParticipationMethod!
+  genderRestriction: GenderRestriction!
+  imageIds: [ID!]!
+}
+
+"""
+수정 화면이 전체 값을 다시 보내는 방식 (부분 수정 아님)
+"""
+input UpdateGroupInput {
+  groupId: ID!
+  title: String!
+  content: String!
+  category: GroupCategory!
+  meetingAt: DateTime!
+  location: String!
+  capacity: Int!
+  participationMethod: ParticipationMethod!
+  genderRestriction: GenderRestriction!
+  imageIds: [ID!]!
+}
+
+input CloseGroupInput {
+  groupId: ID!
+}
+
+input DeleteGroupInput {
+  groupId: ID!
+}
+
+enum ImageUploadPurpose {
+  GROUP
+  PROFILE
+}
+
+input CreateImageUploadUrlInput {
+  purpose: ImageUploadPurpose!
+  contentType: String!
+}
+
+type CreateGroupResult {
+  """
+  홈 목록 connection에 바로 추가할 수 있게 edge로 반환
+  """
+  edge: GroupEdge
+  error: ErrorCreateGroup
+}
+
+type UpdateGroupResult {
+  group: Group
+  error: ErrorUpdateGroup
+}
+
+type CloseGroupResult {
+  group: Group
+  error: ErrorCloseGroup
+}
+
+type DeleteGroupResult {
+  success: Boolean
+  deletedId: ID
+  error: ErrorDeleteGroup
+}
+
+type CreateImageUploadUrlResult {
+  """
+  이 URL로 PUT 업로드
+  """
+  uploadUrl: String
+  imageId: ID
+  error: ErrorCreateImageUploadUrl
+}
+
+type NotFoundGroup {
+  message: String!
+}
+
+"""
+호스트만 할 수 있는 작업
+"""
+type NotGroupHost {
+  message: String!
+}
+
+type GroupAlreadyClosed {
+  message: String!
+}
+
+"""
+입력값 검증 실패. field로 어느 입력이 틀렸는지 표시
+"""
+type InvalidGroupInput {
+  message: String!
+  field: String
+}
+
+"""
+수정한 정원이 현재 참여 인원보다 적음
+"""
+type CapacityBelowParticipants {
+  message: String!
+  participantCount: Int!
+}
+
+type UnsupportedImageType {
+  message: String!
+}
+
+union ErrorCreateGroup = InvalidGroupInput | UnexpectedError
+
+union ErrorUpdateGroup = NotFoundGroup | NotGroupHost | InvalidGroupInput | CapacityBelowParticipants | UnexpectedError
+
+union ErrorCloseGroup = NotFoundGroup | NotGroupHost | GroupAlreadyClosed | UnexpectedError
+
+union ErrorDeleteGroup = NotFoundGroup | NotGroupHost | UnexpectedError
+
+union ErrorCreateImageUploadUrl = UnsupportedImageType | UnexpectedError
