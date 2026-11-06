@@ -11,10 +11,18 @@
     "check-types": "tsc -b"
   },
   "dependencies": {
+    "@stackflow/config": "^2.0.0",
+    "@stackflow/core": "^3.1.0",
+    "@stackflow/plugin-basic-ui": "^1.19.2",
+    "@stackflow/plugin-history-sync": "^2.1.0",
+    "@stackflow/plugin-renderer-basic": "^1.1.16",
+    "@stackflow/react": "^2.1.4",
+    "@stylexjs/stylex": "^0.19.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@stylexjs/unplugin": "^0.19.1",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
