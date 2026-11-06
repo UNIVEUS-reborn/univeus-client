@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "check-types": "tsc -b"
+    "check-types": "tsc -b",
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@stackflow/config": "^2.0.0",
@@ -29,6 +30,7 @@
     "@vitejs/plugin-react": "^6.1.2",
     "oxlint": "^1.90.0",
     "typescript": "~7.0.2",
-    "vite": "^8.3.6"
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
   }
 }
