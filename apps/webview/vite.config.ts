@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => ({
     stylex({
       devMode: mode === 'test' ? 'off' : 'full',
       aliases: { '@src/*': [`${src}/*`] },
+      propertyValidationMode: 'throw',
     }),
     react(),
   ],
