@@ -39,3 +39,6 @@ yarn-error.log*
 
 # oh-my-claudecode
 .omc/
+
+# skill generated files
+.claude/__generated__/
