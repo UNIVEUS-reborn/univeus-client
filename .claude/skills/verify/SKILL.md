@@ -36,9 +36,8 @@ bun run build
 - 테스트 없는 `domain/*.ts` (`*.relay.ts`, `*Fixtures.ts` 제외)
 - 금지 동사로 시작하는 domain export (`get`, `check`, `should`, `format`, `count`, `sum`)
 - `common` → `pages`, `shared` → `common`/`pages` import
-- `as ` 타입 단언
 - 토큰 대신 직접 쓴 색상 값 (`#`, `rgb(`)
-- 주석
+- 주석 (`vite.config.ts` 같은 설정 파일 포함)
 - 직접 호출한 Stackflow API (`useFlow`, `useActions`)
 
 ## 산출물
