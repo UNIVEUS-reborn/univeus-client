@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "relay-compiler && vite --host",
+    "dev": "vite --host",
     "relay": "relay-compiler",
-    "build": "relay-compiler && tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
     "check-types": "tsc -b",
