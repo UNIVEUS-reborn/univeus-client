@@ -1,0 +1,12 @@
+pre-commit:
+  piped: true
+  jobs:
+    - name: lint-webview
+      root: apps/webview/
+      glob: '*.{ts,tsx,js,jsx}'
+      run: bunx oxlint --fix {staged_files}
+      stage_fixed: true
+    - name: format
+      glob: '*.{ts,tsx,js,jsx,mjs,cjs,json,jsonc,md,mdx,yml,yaml,css,scss,html}'
+      run: bunx oxfmt --write --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
