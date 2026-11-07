@@ -6,7 +6,6 @@ import { defineConfig } from 'vitest/config'
 
 const src = fileURLToPath(new URL('./src', import.meta.url))
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [
     relay({ codegen: false }),

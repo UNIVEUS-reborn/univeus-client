@@ -7,7 +7,7 @@
 
 | 순서 | 도메인        | 범위                                                           | schema            | views |
 | ---- | ------------- | -------------------------------------------------------------- | ----------------- | ----- |
-| C0   | base          | routes, stackflow, 토큰, ScreenLayout, BottomNav, mock network | -                 | ⬜    |
+| C0   | base          | routes, stackflow, 토큰, ScreenLayout, BottomNav, mock network | -                 | ✅    |
 | C1   | group         | 홈 탭, 검색, 모임 상세, 모임 작성/수정, 관리 시트              | ✅ (리뷰 반영 전) | ⬜    |
 | C2   | participation | 참여 신청/취소/승인, 참여자 목록                               | ⬜                | ⬜    |
 | C3   | profile       | 마이 탭, 유저 프로필, 신고, N문 N답, 프로필 수정, 설정         | ⬜                | ⬜    |
