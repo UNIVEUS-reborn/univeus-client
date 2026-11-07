@@ -4,5 +4,71 @@
   "rules": {
     "react/rules-of-hooks": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/components/shared/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["@src/pages/**", "@src/components/common/**"],
+                "message": "shared는 pages, common을 import할 수 없어요"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/components/common/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["@src/pages/**"],
+                "message": "common은 pages를 import할 수 없어요"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/**/domain/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["react", "react-dom", "react-relay", "relay-runtime", "@stackflow/*", "@stylexjs/*"],
+                "message": "domain은 순수 함수만 둬요"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/**/domain/*.relay.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["react", "react-dom", "@stackflow/*", "@stylexjs/*"],
+                "message": "relay.ts는 readInlineData 어댑터만 둬요"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
