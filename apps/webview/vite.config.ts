@@ -9,7 +9,7 @@ const src = fileURLToPath(new URL('./src', import.meta.url))
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [
-    relay(),
+    relay({ codegen: false }),
     stylex({
       devMode: mode === 'test' ? 'off' : 'full',
       aliases: { '@src/*': [`${src}/*`] },

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "relay-compiler && vite --host",
     "relay": "relay-compiler",
     "build": "relay-compiler && tsc -b && vite build",
     "lint": "oxlint",
