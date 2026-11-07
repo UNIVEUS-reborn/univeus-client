@@ -104,7 +104,7 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 ## 코드 작성
 
 - 코드와 설정 파일에 주석을 달지 않아요. 설명은 대화로 해요
-- `as Type` 단언을 쓰지 않아요. 필요하면 타입 가드를 써요
+- 타입 단언(`as Type`, `<Type>x`)을 쓰지 않아요. oxlint가 막아요. 필요하면 타입 가드나 `satisfies`를 써요 (`as const`는 허용)
 - 타이머를 쓰는 `useEffect`는 cleanup을 반환해요
 - 로딩 상태를 쓰는 async 핸들러는 try / catch / finally로 작성해요
 - 필터를 바꾸면 페이지네이션을 처음부터 다시 시작해요
