@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex'
+
 import { colors, fontSize, fontWeight } from '@src/styles/tokens.stylex'
 
 export default function App() {

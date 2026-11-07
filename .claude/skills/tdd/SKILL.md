@@ -58,7 +58,7 @@ bunx vitest run src/.../domain/{feature}.test.ts
 # {domain} TDD Summary
 
 | 파일 | 함수 | 케이스 수 |
-| --- | --- | --- |
+| ---- | ---- | --------- |
 
 ## Red 확인
 

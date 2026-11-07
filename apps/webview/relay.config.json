@@ -4,10 +4,7 @@
   "language": "typescript",
   "artifactDirectory": "./src/__generated__",
   "eagerEsModules": true,
-  "excludes": [
-    "**/node_modules/**",
-    "**/__generated__/**"
-  ],
+  "excludes": ["**/node_modules/**", "**/__generated__/**"],
   "customScalarTypes": {
     "DateTime": "string"
   }

@@ -54,15 +54,19 @@ bunx vitest run
 # {domain} Implement Summary
 
 ## 생성
+
 - {경로}
 
 ## 수정
+
 - {경로}
 
 ## tech-spec과 달라진 점
+
 - {무엇을, 왜}
 
 ## 확인
+
 - relay: pass / fail
 - tsc: pass / fail
 - vitest: {N} passed

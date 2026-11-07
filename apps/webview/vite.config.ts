@@ -1,6 +1,6 @@
-import { fileURLToPath } from 'node:url'
 import stylex from '@stylexjs/unplugin/vite'
 import react from '@vitejs/plugin-react'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import relay from 'vite-plugin-relay-lite'
 

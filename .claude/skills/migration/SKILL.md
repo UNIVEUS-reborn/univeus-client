@@ -16,19 +16,19 @@ argument-hint: '[도메인명] [단계명]'
 
 ## 단계
 
-| 단계 | 스킬 | 산출물 | 건너뛰는 경우 |
-| --- | --- | --- | --- |
-| [1] legacy | `legacy-analyze` | `legacy-spec.md` | 없음 |
-| [2] schema | `schema-design` | `schema.md` + `apps/webview/schema.graphql` 수정 | schema 변경 없음 (base) |
-| [2.5] schema-review | `schema-review` | `schema-review.md` | [2]를 건너뛰면 같이 |
-| ⏸ commit 1 | 사용자 | schema 커밋 | [2]를 건너뛰면 같이 |
-| [3] domain-spec | `domain-spec` | `domain-spec.md` | 비즈니스 로직 없음 (base) |
-| [4] tech-spec | `tech-spec` | `tech-spec.md` | 없음 |
-| [5] tdd | `tdd` | `tdd-summary.md` + 테스트 | [3]을 건너뛰면 같이 |
-| [6] implement | `implement` | `implement-summary.md` | 없음 |
-| [7] verify | `verify` | `verify.md` | 없음 |
-| ⏸ commit 2 | 사용자 | 화면 커밋 | 없음 |
-| [8] retrospect | 이 스킬 | `retrospect.md` | 사용자가 원하지 않으면 |
+| 단계                | 스킬             | 산출물                                           | 건너뛰는 경우             |
+| ------------------- | ---------------- | ------------------------------------------------ | ------------------------- |
+| [1] legacy          | `legacy-analyze` | `legacy-spec.md`                                 | 없음                      |
+| [2] schema          | `schema-design`  | `schema.md` + `apps/webview/schema.graphql` 수정 | schema 변경 없음 (base)   |
+| [2.5] schema-review | `schema-review`  | `schema-review.md`                               | [2]를 건너뛰면 같이       |
+| ⏸ commit 1          | 사용자           | schema 커밋                                      | [2]를 건너뛰면 같이       |
+| [3] domain-spec     | `domain-spec`    | `domain-spec.md`                                 | 비즈니스 로직 없음 (base) |
+| [4] tech-spec       | `tech-spec`      | `tech-spec.md`                                   | 없음                      |
+| [5] tdd             | `tdd`            | `tdd-summary.md` + 테스트                        | [3]을 건너뛰면 같이       |
+| [6] implement       | `implement`      | `implement-summary.md`                           | 없음                      |
+| [7] verify          | `verify`         | `verify.md`                                      | 없음                      |
+| ⏸ commit 2          | 사용자           | 화면 커밋                                        | 없음                      |
+| [8] retrospect      | 이 스킬          | `retrospect.md`                                  | 사용자가 원하지 않으면    |
 
 건너뛴 단계는 산출물 대신 `skipped.md`에 `[단계] 이유`를 한 줄씩 기록해요.
 
@@ -57,20 +57,20 @@ argument-hint: '[도메인명] [단계명]'
 
 ## Phase 2: 다음 단계 제안
 
-| 현재 상태 | 다음 |
-| --- | --- |
-| 산출물 없음 | [1] legacy |
-| legacy-spec만 있음 | [2] schema (base는 [4]) |
-| schema.md 있음, schema-review 없음 | [2.5] schema-review |
-| schema-review 있음, schema.graphql 미커밋 | commit 1 |
-| commit 1 완료 | [3] domain-spec |
-| domain-spec 있음 | [4] tech-spec |
-| tech-spec 있음 | [5] tdd (domain-spec을 건너뛰었으면 [6]) |
-| tdd-summary 있음 | [6] implement |
-| implement-summary 있음 | [7] verify |
-| verify.md에 실패 항목 있음 | [6] implement (수정) → [7] 재실행 |
-| verify 통과, 미커밋 | commit 2 |
-| commit 2 완료 | [8] retrospect 또는 다음 도메인 |
+| 현재 상태                                 | 다음                                     |
+| ----------------------------------------- | ---------------------------------------- |
+| 산출물 없음                               | [1] legacy                               |
+| legacy-spec만 있음                        | [2] schema (base는 [4])                  |
+| schema.md 있음, schema-review 없음        | [2.5] schema-review                      |
+| schema-review 있음, schema.graphql 미커밋 | commit 1                                 |
+| commit 1 완료                             | [3] domain-spec                          |
+| domain-spec 있음                          | [4] tech-spec                            |
+| tech-spec 있음                            | [5] tdd (domain-spec을 건너뛰었으면 [6]) |
+| tdd-summary 있음                          | [6] implement                            |
+| implement-summary 있음                    | [7] verify                               |
+| verify.md에 실패 항목 있음                | [6] implement (수정) → [7] 재실행        |
+| verify 통과, 미커밋                       | commit 2                                 |
+| commit 2 완료                             | [8] retrospect 또는 다음 도메인          |
 
 AskUserQuestion으로 물어봐요. 추천 단계를 첫 번째에 `(Recommended)`로 두고, 다른 가능한 단계와 "상태만 확인"을 선택지로 줘요.
 이미 끝난 단계도 다시 실행할 수 있어요.

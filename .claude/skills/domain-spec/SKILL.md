@@ -18,12 +18,12 @@ argument-hint: '<도메인명>'
 
 legacy-spec의 비즈니스 규칙(R 번호)마다 판단 주체를 정해요.
 
-| 판단 주체 | 처리 |
-| --- | --- |
-| 서버 필드로 이미 확정됨 | domain 함수 없음. 근거만 기록 |
-| 클라이언트가 판단해야 함 | domain 함수 |
-| 포맷·단순 산술 | `utils/` (domain 아님) |
-| mutation 호출, 상태 변경 | hook (domain 아님) |
+| 판단 주체                | 처리                          |
+| ------------------------ | ----------------------------- |
+| 서버 필드로 이미 확정됨  | domain 함수 없음. 근거만 기록 |
+| 클라이언트가 판단해야 함 | domain 함수                   |
+| 포맷·단순 산술           | `utils/` (domain 아님)        |
+| mutation 호출, 상태 변경 | hook (domain 아님)            |
 
 동사는 architecture.md의 동사 표를 따라요. union을 반환하면 `classify` 또는 `can`이에요.
 
@@ -53,14 +53,14 @@ legacy-spec의 비즈니스 규칙(R 번호)마다 판단 주체를 정해요.
 
 ## 함수 목록
 
-| 함수 | 동사 유형 | 위치 | 출처 | relay.ts |
-| --- | --- | --- | --- | --- |
-| `classifyGroupAction` | classify | pages/pageGroupDetail/domain/ | R3, R4 | ✅ |
+| 함수                  | 동사 유형 | 위치                          | 출처   | relay.ts |
+| --------------------- | --------- | ----------------------------- | ------ | -------- |
+| `classifyGroupAction` | classify  | pages/pageGroupDetail/domain/ | R3, R4 | ✅       |
 
 ## 서버가 판단하는 규칙
 
 | 규칙 | 서버 필드 |
-| --- | --- |
+| ---- | --------- |
 
 ## {함수명}
 
@@ -72,10 +72,9 @@ type GroupActionInput = {
   viewerRole: GroupViewerRole
 }
 
-function classifyGroupAction(input: GroupActionInput):
-  | { type: 'MANAGE' }
-  | { type: 'JOIN' }
-  | { type: 'BLOCKED'; reason: 'CLOSED' | 'UNKNOWN' }
+function classifyGroupAction(
+  input: GroupActionInput,
+): { type: 'MANAGE' } | { type: 'JOIN' } | { type: 'BLOCKED'; reason: 'CLOSED' | 'UNKNOWN' }
 ```
 
 **규칙**

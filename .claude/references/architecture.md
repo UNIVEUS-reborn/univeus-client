@@ -4,10 +4,10 @@
 
 ## 앱 구성
 
-| 앱 | 역할 | 기술 |
-| --- | --- | --- |
-| `apps/webview` | 실제 화면 | React 19, Vite 8, Stackflow 2, StyleX, Relay 21, vitest |
-| `apps/shell` | 웹뷰를 띄우는 앱 쉘 | Expo, react-native-webview |
+| 앱             | 역할                | 기술                                                    |
+| -------------- | ------------------- | ------------------------------------------------------- |
+| `apps/webview` | 실제 화면           | React 19, Vite 8, Stackflow 2, StyleX, Relay 21, vitest |
+| `apps/shell`   | 웹뷰를 띄우는 앱 쉘 | Expo, react-native-webview                              |
 
 - 패키지 매니저는 bun, 태스크 러너는 turbo예요
 - 레포 `.npmrc`가 공개 npm registry를 지정해요. 전역 registry·프록시 설정보다 우선해요
@@ -60,16 +60,16 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 
 ### export 함수 동사
 
-| 동사 | 반환 |
-| --- | --- |
-| `classify` | 케이스 union |
-| `can` | `{ type: 'ALLOWED' } \| { type: 'BLOCKED'; reason }` |
-| `resolve` | 값 하나 또는 정책 객체 (union이면 classify) |
-| `calculate` | 숫자 |
-| `build` | mutation input, 폼 값 조립 |
-| `to` | 형태 변환 |
-| `is` / `has` | boolean |
-| `validate` | `{ type: 'VALID' } \| { type: 'INVALID'; reason }` |
+| 동사         | 반환                                                 |
+| ------------ | ---------------------------------------------------- |
+| `classify`   | 케이스 union                                         |
+| `can`        | `{ type: 'ALLOWED' } \| { type: 'BLOCKED'; reason }` |
+| `resolve`    | 값 하나 또는 정책 객체 (union이면 classify)          |
+| `calculate`  | 숫자                                                 |
+| `build`      | mutation input, 폼 값 조립                           |
+| `to`         | 형태 변환                                            |
+| `is` / `has` | boolean                                              |
+| `validate`   | `{ type: 'VALID' } \| { type: 'INVALID'; reason }`   |
 
 금지: `get`, `check`, `should`, `format`(→ utils), `count`/`sum`(→ calculate)
 

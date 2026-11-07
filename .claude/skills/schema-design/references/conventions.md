@@ -22,10 +22,10 @@ type Group implements Node {
 
 ### ID 인자 규칙
 
-| 위치 | 받는 값 |
-| --- | --- |
-| URL에서 오는 단건 조회 인자 (`group(groupId:)`) | `_id` |
-| Mutation Input의 ID 필드 | global `id` |
+| 위치                                            | 받는 값     |
+| ----------------------------------------------- | ----------- |
+| URL에서 오는 단건 조회 인자 (`group(groupId:)`) | `_id`       |
+| Mutation Input의 ID 필드                        | global `id` |
 
 각 필드 주석에 어느 ID인지 적어요.
 
@@ -75,11 +75,11 @@ union ErrorCreateGroup = InvalidGroupInput | UnexpectedError
 
 ### 반환 대상
 
-| 작업 | 반환 |
-| --- | --- |
-| 목록에 추가되는 생성 | `edge: {Entity}Edge` |
-| 수정·상태 변경 | 바뀐 엔티티 (`id` 포함, Relay가 캐시 자동 갱신) |
-| 삭제 | `success`, `deletedId` |
+| 작업                 | 반환                                            |
+| -------------------- | ----------------------------------------------- |
+| 목록에 추가되는 생성 | `edge: {Entity}Edge`                            |
+| 수정·상태 변경       | 바뀐 엔티티 (`id` 포함, Relay가 캐시 자동 갱신) |
+| 삭제                 | `success`, `deletedId`                          |
 
 전체 값을 다시 보내는 수정 Input이면, 조회 타입에 그 값을 다시 만들 수 있는 필드(id 포함)가 있는지 확인해요.
 
