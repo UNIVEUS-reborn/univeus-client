@@ -1,8 +1,8 @@
 import stylex from '@stylexjs/unplugin/vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'node:url'
-import { defineConfig } from 'vite'
 import relay from 'vite-plugin-relay-lite'
+import { defineConfig } from 'vitest/config'
 
 const src = fileURLToPath(new URL('./src', import.meta.url))
 
@@ -16,6 +16,9 @@ export default defineConfig(({ mode }) => ({
     }),
     react(),
   ],
+  test: {
+    server: { deps: { inline: [/@graphql-tools/] } },
+  },
   resolve: {
     alias: {
       '@src': src,
