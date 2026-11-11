@@ -85,6 +85,10 @@ type User implements Node {
   """
   admissionYear: Int!
   college: College!
+  """
+  인증 회원 여부 (모임 카드·상세의 인증 뱃지, 지급 기준은 서버가 정함)
+  """
+  isVerified: Boolean!
 }
 
 """
@@ -200,11 +204,11 @@ type Group implements Node {
   recruitDeadlineAt: DateTime!
   location: String!
   """
-  정원 (호스트 포함)
+  정원 (호스트 제외, 1~5)
   """
   capacity: Int!
   """
-  현재 참여 인원 (호스트 포함)
+  현재 참여 인원 (호스트 제외)
   """
   participantCount: Int!
   participationMethod: ParticipationMethod!
@@ -431,7 +435,7 @@ type ImageTooLarge {
 
 union ErrorCreateGroup = InvalidGroupInput | UnexpectedError
 
-union ErrorUpdateGroup = NotFoundGroup | NotGroupHost | InvalidGroupInput | CapacityBelowParticipants | UnexpectedError
+union ErrorUpdateGroup = NotFoundGroup | NotGroupHost | GroupAlreadyClosed | InvalidGroupInput | CapacityBelowParticipants | UnexpectedError
 
 union ErrorCloseGroup = NotFoundGroup | NotGroupHost | GroupAlreadyClosed | UnexpectedError
 
