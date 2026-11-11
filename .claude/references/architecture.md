@@ -16,7 +16,7 @@
 
 ```
 routes/        activityNames.ts, activityParams.ts, routes.ts
-stackflow/     config.ts, register.ts, stackflow.ts, useNavigator.ts
+stackflow/     config.ts, register.ts, stackflow.tsx, useFlow.ts, useStepFlow.ts
 relay/         environment.ts, mock network
 pages/{pageName}/
   {PageName}Page.tsx
@@ -79,7 +79,8 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 
 - activity 이름은 `routes/activityNames.ts`의 상수로만 써요
 - params 타입은 `routes/activityParams.ts`에 두고 `stackflow/register.ts`에서 `@stackflow/config`의 `Register`를 확장해요
-- 화면 이동은 `useNavigator`(push, replace, pop)와 `useStepNavigator`(pushStep, replaceStep, popStep)로만 해요. Stackflow API를 직접 부르지 않아요
+- 화면 이동은 `@src/stackflow/useFlow`(push, replace, pop)와 `@src/stackflow/useStepFlow(activityName)`(pushStep, replaceStep, popStep)로만 해요. `@stackflow/react`의 같은 이름 훅은 oxlint가 막아요
+- `useStepFlow`는 호출한 activity를 `targetActivityId`로 고정해요. 화면 전환 중에 step을 부르면 새 activity에 step이 들어가는 문제를 막아요
 - params에는 ID만 넘겨요. 큰 데이터를 넘기지 않아요
 - 여러 단계 화면(가입, 모임 작성)은 activity 하나 + step으로 만들어요
 - 하단 탭은 `Main` activity 하나 안에서 전환해요

@@ -38,7 +38,7 @@ bun run build
 - `common` → `pages`, `shared` → `common`/`pages` import
 - 토큰 대신 직접 쓴 색상 값 (`#`, `rgb(`)
 - 주석 (`vite.config.ts` 같은 설정 파일 포함)
-- 직접 호출한 Stackflow API (`useFlow`, `useActions`)
+- `@stackflow/react`에서 직접 import한 `useFlow`, `useStepFlow`, `useActions` (`src/stackflow/` 제외)
 
 ## 산출물
 

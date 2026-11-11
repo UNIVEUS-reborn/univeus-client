@@ -4,7 +4,19 @@
   "rules": {
     "react/rules-of-hooks": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
-    "typescript/consistent-type-assertions": ["error", { "assertionStyle": "never" }]
+    "typescript/consistent-type-assertions": ["error", { "assertionStyle": "never" }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "@stackflow/react",
+            "importNames": ["useFlow", "useStepFlow"],
+            "message": "@src/stackflow/useFlow, @src/stackflow/useStepFlow를 써요"
+          }
+        ]
+      }
+    ]
   },
   "overrides": [
     {
@@ -17,6 +29,13 @@
               {
                 "group": ["@src/pages/**", "@src/components/common/**"],
                 "message": "shared는 pages, common을 import할 수 없어요"
+              }
+            ],
+            "paths": [
+              {
+                "name": "@stackflow/react",
+                "importNames": ["useFlow", "useStepFlow"],
+                "message": "@src/stackflow/useFlow, @src/stackflow/useStepFlow를 써요"
               }
             ]
           }
@@ -33,6 +52,13 @@
               {
                 "group": ["@src/pages/**"],
                 "message": "common은 pages를 import할 수 없어요"
+              }
+            ],
+            "paths": [
+              {
+                "name": "@stackflow/react",
+                "importNames": ["useFlow", "useStepFlow"],
+                "message": "@src/stackflow/useFlow, @src/stackflow/useStepFlow를 써요"
               }
             ]
           }
@@ -69,6 +95,12 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": ["src/stackflow/**/*"],
+      "rules": {
+        "no-restricted-imports": "off"
       }
     }
   ]
