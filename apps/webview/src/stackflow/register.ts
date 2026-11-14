@@ -3,8 +3,13 @@ import type {
   GroupCreateParams,
   GroupDetailParams,
   GroupEditParams,
+  IntroductionEditParams,
+  IntroductionParams,
   MainParams,
+  ProfileEditParams,
   SearchParams,
+  SettingsParams,
+  UserProfileParams,
 } from '@src/routes/activityParams'
 
 declare module '@stackflow/config' {
@@ -14,5 +19,10 @@ declare module '@stackflow/config' {
     [Activity.GROUP_CREATE]: GroupCreateParams
     [Activity.GROUP_DETAIL]: GroupDetailParams
     [Activity.GROUP_EDIT]: GroupEditParams
+    [Activity.USER_PROFILE]: UserProfileParams
+    [Activity.SETTINGS]: SettingsParams
+    [Activity.PROFILE_EDIT]: ProfileEditParams
+    [Activity.INTRODUCTION]: IntroductionParams
+    [Activity.INTRODUCTION_EDIT]: IntroductionEditParams
   }
 }

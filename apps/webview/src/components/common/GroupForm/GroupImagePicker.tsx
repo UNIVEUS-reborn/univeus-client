@@ -5,12 +5,11 @@ import { useRef, useState, type ChangeEvent } from 'react'
 import deleteIcon from '@src/assets/group/delete.svg'
 import inputImage from '@src/assets/group/input-img.svg'
 import type { GroupFormImage } from '@src/components/common/GroupForm/groupFormValues'
-import { useUploadGroupImage } from '@src/components/common/GroupForm/useUploadGroupImage'
-import { BottomSheet } from '@src/components/shared/BottomSheet'
-import { Button } from '@src/components/shared/Button'
+import { ImageUploadFailureSheet } from '@src/components/common/Image/ImageUploadFailureSheet'
+import { IMAGE_ACCEPT, useUploadImage } from '@src/components/common/Image/useUploadImage'
 import { Spinner } from '@src/components/shared/Spinner'
 import { useStepFlowModalState } from '@src/stackflow/useStepFlowModalState'
-import { colors, fontSize, radius, space } from '@src/styles/tokens.stylex'
+import { colors, fontSize, radius } from '@src/styles/tokens.stylex'
 
 type Props = {
   activityName: RegisteredActivityName
@@ -20,14 +19,12 @@ type Props = {
   onRemove: (image: GroupFormImage) => void
 }
 
-const ACCEPT = 'image/jpeg,image/png,image/webp,image/heic'
-
 export function GroupImageAddButton({
   activityName,
   onUploadingChange,
   onAdd,
 }: Pick<Props, 'activityName' | 'onUploadingChange' | 'onAdd'>) {
-  const upload = useUploadGroupImage()
+  const upload = useUploadImage('GROUP')
   const pendingCount = useRef(0)
   const [isUploading, setIsUploading] = useState(false)
   const [isFailureOpen, openFailure, closeFailure] = useStepFlowModalState(activityName, 'image-failure')
@@ -62,21 +59,9 @@ export function GroupImageAddButton({
       <label {...stylex.props(styles.addButton)}>
         {isUploading ? <Spinner /> : <span {...stylex.props(styles.addText)}>사진 추가하기</span>}
         <img src={inputImage} alt="" width={24} height={24} />
-        <input type="file" accept={ACCEPT} onChange={handleFileChange} {...stylex.props(styles.hidden)} />
+        <input type="file" accept={IMAGE_ACCEPT} onChange={handleFileChange} {...stylex.props(styles.hidden)} />
       </label>
-      <BottomSheet
-        open={isFailureOpen}
-        onClose={closeFailure}
-        title="이미지 업로드 실패!"
-        actions={
-          <Button variant="floating" onClick={closeFailure}>
-            확인
-          </Button>
-        }
-      >
-        <p {...stylex.props(styles.failureText)}>{'업로드가 불가능한 이미지입니다.\n다른 이미지를 선택해주세요!'}</p>
-        <p {...stylex.props(styles.failureReason)}>업로드 불가 사유: 업로드 불가 확장자 혹은 용량</p>
-      </BottomSheet>
+      <ImageUploadFailureSheet open={isFailureOpen} onClose={closeFailure} />
     </>
   )
 }
@@ -119,16 +104,6 @@ const styles = stylex.create({
   },
   hidden: {
     display: 'none',
-  },
-  failureText: {
-    margin: 0,
-    color: colors.textTertiary,
-  },
-  failureReason: {
-    marginTop: space.x2,
-    marginBottom: 0,
-    color: colors.danger,
-    fontSize: fontSize.sm,
   },
   list: {
     display: 'flex',

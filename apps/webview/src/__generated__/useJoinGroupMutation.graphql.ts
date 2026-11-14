@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcdb30f1181d4a8128384e5adc76cab6>>
+ * @generated SignedSource<<9ab6291e209e95162405e5b9a8eb91d2>>
  * @lightSyntaxTransform
  */
 
@@ -265,6 +265,20 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "_id",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isViewer",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "nickname",
                         "storageKey": null
                       },
@@ -367,12 +381,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e168a9f2d8fa717b92bb0e551d1f73de",
+    "cacheID": "6f8d6c1692555d8d44cacc895d3964f1",
     "id": null,
     "metadata": {},
     "name": "useJoinGroupMutation",
     "operationKind": "mutation",
-    "text": "mutation useJoinGroupMutation(\n  $input: JoinGroupInput!\n) {\n  joinGroup(input: $input) {\n    group {\n      id\n      viewerRole\n      ...groupJoinAction_group\n      ...groupHostAction_group\n      ...GroupParticipants_group\n      ...GroupDetailInfo_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on AlreadyJoinedGroupError {\n        message\n      }\n      ... on GenderRestrictedGroupError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment GroupParticipants_group on Group {\n  status\n  viewerRole\n  participations {\n    id\n    ...ParticipantCard_participation\n  }\n}\n\nfragment ParticipantCard_participation on Participation {\n  id\n  status\n  user {\n    nickname\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n\nfragment groupHostAction_group on Group {\n  status\n  viewerRole\n}\n\nfragment groupJoinAction_group on Group {\n  status\n  viewerRole\n  viewerJoinRestriction\n}\n"
+    "text": "mutation useJoinGroupMutation(\n  $input: JoinGroupInput!\n) {\n  joinGroup(input: $input) {\n    group {\n      id\n      viewerRole\n      ...groupJoinAction_group\n      ...groupHostAction_group\n      ...GroupParticipants_group\n      ...GroupDetailInfo_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on AlreadyJoinedGroupError {\n        message\n      }\n      ... on GenderRestrictedGroupError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment GroupParticipants_group on Group {\n  status\n  viewerRole\n  participations {\n    id\n    ...ParticipantCard_participation\n  }\n}\n\nfragment ParticipantCard_participation on Participation {\n  id\n  status\n  user {\n    _id\n    isViewer\n    nickname\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n\nfragment groupHostAction_group on Group {\n  status\n  viewerRole\n}\n\nfragment groupJoinAction_group on Group {\n  status\n  viewerRole\n  viewerJoinRestriction\n}\n"
   }
 };
 })();

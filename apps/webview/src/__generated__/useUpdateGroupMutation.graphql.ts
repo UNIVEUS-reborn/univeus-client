@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2520b0032b151fb854fa50627275b42>>
+ * @generated SignedSource<<636504c7e4d07237457eed59770f8949>>
  * @lightSyntaxTransform
  */
 
@@ -148,7 +148,14 @@ v4 = {
   ],
   "storageKey": null
 },
-v5 = [
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "_id",
+  "storageKey": null
+},
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -236,13 +243,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*:: as any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "_id",
-                "storageKey": null
-              },
+              (v5/*:: as any*/),
               {
                 "alias": null,
                 "args": null,
@@ -264,7 +265,7 @@ return {
                 "kind": "LinkedField",
                 "name": "images",
                 "plural": true,
-                "selections": (v5/*:: as any*/),
+                "selections": (v6/*:: as any*/),
                 "storageKey": null
               },
               {
@@ -324,10 +325,18 @@ return {
                     "kind": "LinkedField",
                     "name": "profileImage",
                     "plural": false,
-                    "selections": (v5/*:: as any*/),
+                    "selections": (v6/*:: as any*/),
                     "storageKey": null
                   },
                   (v2/*:: as any*/),
+                  (v5/*:: as any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isViewer",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -383,12 +392,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d3862c9e48e8c0c7b26742e79bff2dc9",
+    "cacheID": "be16358f89a3725097f3e3d703500b5f",
     "id": null,
     "metadata": {},
     "name": "useUpdateGroupMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateGroupMutation(\n  $input: UpdateGroupInput!\n) {\n  updateGroup(input: $input) {\n    group {\n      id\n      ...GroupCard_group\n      ...GroupDetailHost_group\n      ...GroupDetailInfo_group\n      ...GroupDetailBody_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on InvalidGroupInputError {\n        message\n      }\n      ... on CapacityBelowParticipantsError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupCard_group on Group {\n  _id\n  title\n  category\n  images {\n    url\n    id\n  }\n  genderRestriction\n  meetingAt\n  capacity\n  participantCount\n  host {\n    isVerified\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailBody_group on Group {\n  title\n  content\n  images {\n    id\n    url\n  }\n}\n\nfragment GroupDetailHost_group on Group {\n  host {\n    nickname\n    isVerified\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n"
+    "text": "mutation useUpdateGroupMutation(\n  $input: UpdateGroupInput!\n) {\n  updateGroup(input: $input) {\n    group {\n      id\n      ...GroupCard_group\n      ...GroupDetailHost_group\n      ...GroupDetailInfo_group\n      ...GroupDetailBody_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on InvalidGroupInputError {\n        message\n      }\n      ... on CapacityBelowParticipantsError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupCard_group on Group {\n  _id\n  title\n  category\n  images {\n    url\n    id\n  }\n  genderRestriction\n  meetingAt\n  capacity\n  participantCount\n  host {\n    isVerified\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailBody_group on Group {\n  title\n  content\n  images {\n    id\n    url\n  }\n}\n\nfragment GroupDetailHost_group on Group {\n  host {\n    _id\n    isViewer\n    nickname\n    isVerified\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n"
   }
 };
 })();

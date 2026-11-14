@@ -21,6 +21,7 @@ export const colors = stylex.defineVars({
   genderMale: '#6e7dff',
   genderFemale: '#ff8a8a',
   placeholder: '#bfc3d4',
+  brandMuted: '#8692ff',
 })
 
 export const fontSize = stylex.defineVars({
@@ -36,10 +37,12 @@ export const fontSize = stylex.defineVars({
 })
 
 export const fontWeight = stylex.defineVars({
+  light: '300',
   regular: '400',
   medium: '500',
   semibold: '600',
   bold: '700',
+  black: '900',
 })
 
 export const fontFamily = stylex.defineVars({

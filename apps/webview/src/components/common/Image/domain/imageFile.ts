@@ -1,8 +1,8 @@
-export const GROUP_IMAGE_MAX_BYTE_SIZE = 1024 * 1024
+export const IMAGE_MAX_BYTE_SIZE = 1024 * 1024
 
 type ImageContentType = 'JPEG' | 'PNG' | 'WEBP' | 'HEIC'
 
-export type GroupImageFileInput = {
+export type ImageFileInput = {
   byteSize: number
   mimeType: string
 }
@@ -22,10 +22,10 @@ function toContentType(mimeType: string): ImageContentType | null {
   }
 }
 
-export function classifyGroupImageFile({
+export function classifyImageFile({
   byteSize,
   mimeType,
-}: GroupImageFileInput):
+}: ImageFileInput):
   | { type: 'UPLOADABLE'; contentType: ImageContentType }
   | { type: 'UNSUPPORTED_TYPE' }
   | { type: 'TOO_LARGE' } {
@@ -33,7 +33,7 @@ export function classifyGroupImageFile({
   if (contentType === null) {
     return { type: 'UNSUPPORTED_TYPE' }
   }
-  if (byteSize >= GROUP_IMAGE_MAX_BYTE_SIZE) {
+  if (byteSize >= IMAGE_MAX_BYTE_SIZE) {
     return { type: 'TOO_LARGE' }
   }
   return { type: 'UPLOADABLE', contentType }

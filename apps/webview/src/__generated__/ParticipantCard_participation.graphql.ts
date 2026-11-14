@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<74659b854e65489f4e560c6b0d8607fb>>
+ * @generated SignedSource<<04fac2ea0c45197193f85467e979ee6e>>
  * @lightSyntaxTransform
  */
 
@@ -15,8 +15,10 @@ export type ParticipantCard_participation$data = {
   readonly id: string;
   readonly status: ParticipationStatus;
   readonly user: {
+    readonly _id: string;
     readonly admissionYear: number;
     readonly college: College;
+    readonly isViewer: boolean;
     readonly nickname: string;
     readonly " $fragmentSpreads": FragmentRefs<"UserAvatar_user">;
   };
@@ -59,6 +61,20 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "_id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isViewer",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "nickname",
           "storageKey": null
         },
@@ -89,6 +105,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "10a093b61175ddf8035fd117b7cc43d1";
+(node as any).hash = "3a614ceb316e6a6bd60ecd866de18a40";
 
 export default node;

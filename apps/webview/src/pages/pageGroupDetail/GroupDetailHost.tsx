@@ -3,6 +3,7 @@ import { graphql, useFragment } from 'react-relay'
 
 import type { GroupDetailHost_group$key } from '@src/__generated__/GroupDetailHost_group.graphql'
 import { collegeLabel } from '@src/components/common/User/collegeLabel'
+import { useNavigateToProfile } from '@src/components/common/User/useNavigateToProfile'
 import { UserAvatar } from '@src/components/common/User/UserAvatar'
 import { VerifiedBadge } from '@src/components/shared/VerifiedBadge'
 import { fontSize, fontWeight, space } from '@src/styles/tokens.stylex'
@@ -13,10 +14,13 @@ type Props = {
 }
 
 export function GroupDetailHost({ groupRef }: Props) {
+  const navigateToProfile = useNavigateToProfile()
   const { host } = useFragment(
     graphql`
       fragment GroupDetailHost_group on Group {
         host {
+          _id
+          isViewer
           nickname
           isVerified
           admissionYear
@@ -30,7 +34,14 @@ export function GroupDetailHost({ groupRef }: Props) {
 
   return (
     <div {...stylex.props(styles.host)}>
-      <UserAvatar userRef={host} size={54} />
+      <button
+        type="button"
+        aria-label={`${host.nickname} 프로필`}
+        onClick={() => navigateToProfile(host)}
+        {...stylex.props(styles.avatar)}
+      >
+        <UserAvatar userRef={host} size={54} />
+      </button>
       <div>
         <p {...stylex.props(styles.name)}>
           {host.nickname}
@@ -45,6 +56,12 @@ export function GroupDetailHost({ groupRef }: Props) {
 }
 
 const styles = stylex.create({
+  avatar: {
+    display: 'flex',
+    padding: 0,
+    borderStyle: 'none',
+    backgroundColor: 'transparent',
+  },
   host: {
     display: 'flex',
     alignItems: 'center',

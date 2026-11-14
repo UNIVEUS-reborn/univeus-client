@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06010d7d6481af9b40bc78dc5117ade0>>
+ * @generated SignedSource<<beb326c1b1625fc8453c30865e86d5a0>>
  * @lightSyntaxTransform
  */
 
@@ -15,10 +15,10 @@ export type CreateImageUploadUrlInput = {
   contentType: ImageContentType;
   purpose: ImageUploadPurpose;
 };
-export type useUploadGroupImageMutation$variables = {
+export type useUploadImageMutation$variables = {
   input: CreateImageUploadUrlInput;
 };
-export type useUploadGroupImageMutation$data = {
+export type useUploadImageMutation$data = {
   readonly createImageUploadUrl: {
     readonly error: {
       readonly __typename: string;
@@ -27,9 +27,9 @@ export type useUploadGroupImageMutation$data = {
     readonly uploadUrl: string | null | undefined;
   };
 };
-export type useUploadGroupImageMutation = {
-  response: useUploadGroupImageMutation$data;
-  variables: useUploadGroupImageMutation$variables;
+export type useUploadImageMutation = {
+  response: useUploadImageMutation$data;
+  variables: useUploadImageMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -96,7 +96,7 @@ return {
     "argumentDefinitions": (v0/*:: as any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useUploadGroupImageMutation",
+    "name": "useUploadImageMutation",
     "selections": (v1/*:: as any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -105,20 +105,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*:: as any*/),
     "kind": "Operation",
-    "name": "useUploadGroupImageMutation",
+    "name": "useUploadImageMutation",
     "selections": (v1/*:: as any*/)
   },
   "params": {
-    "cacheID": "2013a7fc48669d61e5affb001f3cda2f",
+    "cacheID": "68426d84277af5abd51a852101b3efdd",
     "id": null,
     "metadata": {},
-    "name": "useUploadGroupImageMutation",
+    "name": "useUploadImageMutation",
     "operationKind": "mutation",
-    "text": "mutation useUploadGroupImageMutation(\n  $input: CreateImageUploadUrlInput!\n) {\n  createImageUploadUrl(input: $input) {\n    uploadUrl\n    imageId\n    error {\n      __typename\n    }\n  }\n}\n"
+    "text": "mutation useUploadImageMutation(\n  $input: CreateImageUploadUrlInput!\n) {\n  createImageUploadUrl(input: $input) {\n    uploadUrl\n    imageId\n    error {\n      __typename\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0de539657d6527429f558813bfd179a3";
+(node as any).hash = "05ab8f9d39f2f9401b7ea132f5199f5d";
 
 export default node;

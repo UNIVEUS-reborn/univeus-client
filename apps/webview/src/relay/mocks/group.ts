@@ -1,6 +1,7 @@
 import { isRef, type IMocks, type IMockStore, type Ref } from '@graphql-tools/mock'
 
 import defaultImage from '@src/assets/group/default_image.png'
+import { VIEWER_USER_KEY } from '@src/relay/mocks/profile'
 
 const HOUR = 60 * 60 * 1000
 const titles = ['같이 점심 먹어요', '토익 스터디 구해요', '저녁 메뉴는 뭘 먹을까', '공강에 보드게임 하실 분']
@@ -30,11 +31,14 @@ export const groupMocks: IMocks = {
     nickname: pick(nicknames),
     admissionYear: between(2019, 2024),
     isVerified: Math.random() < 0.5,
+    createdGroupCount: between(0, 10),
+    joinedGroupCount: between(0, 20),
   }),
   Image: () => ({ url: defaultImage }),
   GroupConnection: () => ({
     edges: Array.from({ length: 10 }, () => ({})),
     pageInfo: { hasNextPage: true },
+    totalCount: between(10, 30),
   }),
   CreateGroupResult: () => ({ error: null }),
   UpdateGroupResult: () => ({ error: null }),
@@ -58,6 +62,8 @@ export function groupResolvers(store: IMockStore) {
   const viewerRoles = new Map<string, string>()
   const participationMethods = new Map<string, string>()
   const viewerParticipations = new Map<string, Ref>()
+
+  const viewerRoleOf = (key: string) => viewerRoles.get(key) ?? (isEvenAt(key, 1) ? 'HOST' : 'NONE')
 
   const participationMethodOf = (key: string) =>
     participationMethods.get(key) ?? (isEvenAt(key, 2) ? 'AUTO_APPROVAL' : 'MANUAL_APPROVAL')
@@ -99,9 +105,11 @@ export function groupResolvers(store: IMockStore) {
   return {
     Group: {
       _id: (group: Ref) => group.$ref.key,
-      viewerRole: (group: Ref) => viewerRoles.get(group.$ref.key) ?? (isEvenAt(group.$ref.key, 1) ? 'HOST' : 'NONE'),
+      viewerRole: (group: Ref) => viewerRoleOf(group.$ref.key),
       participationMethod: (group: Ref) => participationMethodOf(group.$ref.key),
       participantCount: (group: Ref) => countParticipating(group),
+      host: (group: Ref) =>
+        viewerRoleOf(group.$ref.key) === 'HOST' ? refOf('User', VIEWER_USER_KEY) : store.get(group, 'host'),
       participations: (group: Ref) => {
         const items = participationsOf(group)
         items.forEach((participation) => store.set(participation, 'group', group))
@@ -142,6 +150,7 @@ export function groupResolvers(store: IMockStore) {
         const isAuto = participationMethodOf(input.groupId) === 'AUTO_APPROVAL'
         const participation = refOf('Participation', crypto.randomUUID())
         store.set(participation, 'status', isAuto ? 'PARTICIPATING' : 'PENDING')
+        store.set(participation, 'user', refOf('User', VIEWER_USER_KEY))
         store.set(group, 'participations', [...participationsOf(group), participation])
         viewerParticipations.set(input.groupId, participation)
         viewerRoles.set(input.groupId, isAuto ? 'PARTICIPANT' : 'PENDING')

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbfbeeb5c7046374611ab01ff2c9f323>>
+ * @generated SignedSource<<a2d981ed8ba0383fad375b7bde088c16>>
  * @lightSyntaxTransform
  */
 
@@ -271,6 +271,20 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "_id",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isViewer",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "nickname",
                             "storageKey": null
                           },
@@ -376,12 +390,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6d4a64d466981a9eb1f4a67085c24daa",
+    "cacheID": "5e9799aba445f60cfdc2a1c4c829b1f7",
     "id": null,
     "metadata": {},
     "name": "useApproveParticipationMutation",
     "operationKind": "mutation",
-    "text": "mutation useApproveParticipationMutation(\n  $input: ApproveParticipationInput!\n) {\n  approveParticipation(input: $input) {\n    participation {\n      id\n      status\n      group {\n        id\n        ...groupHostAction_group\n        ...GroupParticipants_group\n        ...GroupDetailInfo_group\n      }\n    }\n    error {\n      __typename\n      ... on NotFoundParticipationError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on ParticipationAlreadyApprovedError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment GroupParticipants_group on Group {\n  status\n  viewerRole\n  participations {\n    id\n    ...ParticipantCard_participation\n  }\n}\n\nfragment ParticipantCard_participation on Participation {\n  id\n  status\n  user {\n    nickname\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n\nfragment groupHostAction_group on Group {\n  status\n  viewerRole\n}\n"
+    "text": "mutation useApproveParticipationMutation(\n  $input: ApproveParticipationInput!\n) {\n  approveParticipation(input: $input) {\n    participation {\n      id\n      status\n      group {\n        id\n        ...groupHostAction_group\n        ...GroupParticipants_group\n        ...GroupDetailInfo_group\n      }\n    }\n    error {\n      __typename\n      ... on NotFoundParticipationError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on ParticipationAlreadyApprovedError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment GroupParticipants_group on Group {\n  status\n  viewerRole\n  participations {\n    id\n    ...ParticipantCard_participation\n  }\n}\n\nfragment ParticipantCard_participation on Participation {\n  id\n  status\n  user {\n    _id\n    isViewer\n    nickname\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n\nfragment groupHostAction_group on Group {\n  status\n  viewerRole\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9039195040d49dec3b45937026dfdf6b>>
+ * @generated SignedSource<<ac3e1be7b2d967491a5c0d945d0bc952>>
  * @lightSyntaxTransform
  */
 
@@ -253,6 +253,20 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "_id",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isViewer",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "nickname",
                         "storageKey": null
                       },
@@ -355,12 +369,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ff28d4b3b3756de5e430883c5040a8d3",
+    "cacheID": "93aebecf056694a298821749bd11da81",
     "id": null,
     "metadata": {},
     "name": "useCancelParticipationMutation",
     "operationKind": "mutation",
-    "text": "mutation useCancelParticipationMutation(\n  $input: CancelParticipationInput!\n) {\n  cancelParticipation(input: $input) {\n    group {\n      id\n      ...groupJoinAction_group\n      ...groupHostAction_group\n      ...GroupParticipants_group\n      ...GroupDetailInfo_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on NotGroupParticipantError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment GroupParticipants_group on Group {\n  status\n  viewerRole\n  participations {\n    id\n    ...ParticipantCard_participation\n  }\n}\n\nfragment ParticipantCard_participation on Participation {\n  id\n  status\n  user {\n    nickname\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n\nfragment groupHostAction_group on Group {\n  status\n  viewerRole\n}\n\nfragment groupJoinAction_group on Group {\n  status\n  viewerRole\n  viewerJoinRestriction\n}\n"
+    "text": "mutation useCancelParticipationMutation(\n  $input: CancelParticipationInput!\n) {\n  cancelParticipation(input: $input) {\n    group {\n      id\n      ...groupJoinAction_group\n      ...groupHostAction_group\n      ...GroupParticipants_group\n      ...GroupDetailInfo_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on NotGroupParticipantError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment GroupParticipants_group on Group {\n  status\n  viewerRole\n  participations {\n    id\n    ...ParticipantCard_participation\n  }\n}\n\nfragment ParticipantCard_participation on Participation {\n  id\n  status\n  user {\n    _id\n    isViewer\n    nickname\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n\nfragment groupHostAction_group on Group {\n  status\n  viewerRole\n}\n\nfragment groupJoinAction_group on Group {\n  status\n  viewerRole\n  viewerJoinRestriction\n}\n"
   }
 };
 })();

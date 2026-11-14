@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c230ae96a0e4366aa4223e6f2a06906>>
+ * @generated SignedSource<<8abd5a7ce0cb5ffd23e907e4abd9d7c1>>
  * @lightSyntaxTransform
  */
 
@@ -12,9 +12,11 @@ export type College = "ARTS_AND_PHYSICAL_EDUCATION" | "CONVERGENCE_SCIENCE" | "C
 import { FragmentRefs } from "relay-runtime";
 export type GroupDetailHost_group$data = {
   readonly host: {
+    readonly _id: string;
     readonly admissionYear: number;
     readonly college: College;
     readonly isVerified: boolean;
+    readonly isViewer: boolean;
     readonly nickname: string;
     readonly " $fragmentSpreads": FragmentRefs<"UserAvatar_user">;
   };
@@ -39,6 +41,20 @@ const node: ReaderFragment = {
       "name": "host",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "_id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isViewer",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -80,6 +96,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c02ea890fa789d2814c5014c8c57339a";
+(node as any).hash = "7a610e10a5613b59026e3b36ac591a55";
 
 export default node;

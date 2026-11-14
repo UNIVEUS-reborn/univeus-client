@@ -4,6 +4,7 @@ import { graphql, useFragment } from 'react-relay'
 import type { GroupStatus, GroupViewerRole } from '@src/__generated__/GroupParticipants_group.graphql'
 import type { ParticipantCard_participation$key } from '@src/__generated__/ParticipantCard_participation.graphql'
 import { collegeLabel } from '@src/components/common/User/collegeLabel'
+import { useNavigateToProfile } from '@src/components/common/User/useNavigateToProfile'
 import { UserAvatar } from '@src/components/common/User/UserAvatar'
 import { classifyParticipation } from '@src/pages/pageGroupDetail/domain/participation'
 import { colors, fontSize, fontWeight, radius, shadow, space } from '@src/styles/tokens.stylex'
@@ -24,6 +25,8 @@ export function ParticipantCard({ participationRef, groupStatus, viewerRole, app
         id
         status
         user {
+          _id
+          isViewer
           nickname
           admissionYear
           college
@@ -33,13 +36,21 @@ export function ParticipantCard({ participationRef, groupStatus, viewerRole, app
     `,
     participationRef,
   )
+  const navigateToProfile = useNavigateToProfile()
   const display = classifyParticipation({ participationStatus: participation.status, viewerRole, groupStatus })
   const { user } = participation
 
   return (
     <div {...stylex.props(styles.card, display.type !== 'PARTICIPATING' && styles.pending)}>
       <div {...stylex.props(styles.user)}>
-        <UserAvatar userRef={user} size={54} />
+        <button
+          type="button"
+          aria-label={`${user.nickname} 프로필`}
+          onClick={() => navigateToProfile(user)}
+          {...stylex.props(styles.avatar)}
+        >
+          <UserAvatar userRef={user} size={54} />
+        </button>
         <div>
           <p {...stylex.props(styles.name)}>{user.nickname}</p>
           <p {...stylex.props(styles.department)}>
@@ -76,6 +87,12 @@ function ParticipationStatus({ display, approving, onApprove }: StatusProps) {
 }
 
 const styles = stylex.create({
+  avatar: {
+    display: 'flex',
+    padding: 0,
+    borderStyle: 'none',
+    backgroundColor: 'transparent',
+  },
   card: {
     display: 'flex',
     alignItems: 'center',

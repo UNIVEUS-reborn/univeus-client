@@ -20,3 +20,17 @@ export type GroupEditParams = {
   groupId: string
   step?: GroupFormStep
 }
+
+export type UserProfileParams = {
+  userId: string
+}
+
+export type SettingsParams = Record<string, never>
+
+export type ProfileEditParams = Record<string, never>
+
+export type IntroductionParams = Record<string, never>
+
+export type IntroductionEditParams = {
+  from?: 'my'
+}

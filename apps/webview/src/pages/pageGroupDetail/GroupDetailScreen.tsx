@@ -4,9 +4,11 @@ import { graphql, useLazyLoadQuery } from 'react-relay'
 
 import type { GroupDetailScreenQuery } from '@src/__generated__/GroupDetailScreenQuery.graphql'
 import calendarBlue from '@src/assets/group/calendar-blue.svg'
+import declaration from '@src/assets/profile/declaration.svg'
 import { classifyGroupHostAction } from '@src/components/common/Group/domain/groupHostAction'
 import { readGroupHostAction } from '@src/components/common/Group/domain/groupHostAction.relay'
 import { groupCategoryLabel } from '@src/components/common/Group/groupLabels'
+import { ReportSheet } from '@src/components/common/Report/ReportSheet'
 import { CenterMessage } from '@src/components/shared/CenterMessage'
 import { ScreenLayout } from '@src/components/shared/ScreenLayout'
 import { classifyGroupJoinAction } from '@src/pages/pageGroupDetail/domain/groupJoinAction'
@@ -21,7 +23,8 @@ import { GroupParticipants } from '@src/pages/pageGroupDetail/GroupParticipants'
 import { useGroupDetailSheets } from '@src/pages/pageGroupDetail/hooks/useGroupDetailSheets'
 import { useParticipationSheets } from '@src/pages/pageGroupDetail/hooks/useParticipationSheets'
 import { ParticipationSheets } from '@src/pages/pageGroupDetail/ParticipationSheets'
-import type { Activity } from '@src/routes/activityNames'
+import { Activity } from '@src/routes/activityNames'
+import { useStepFlowModalState } from '@src/stackflow/useStepFlowModalState'
 import { space } from '@src/styles/tokens.stylex'
 
 export function GroupDetailScreen() {
@@ -66,6 +69,7 @@ function GroupDetailContent({ group, groupId }: ContentProps) {
   const sheets = useGroupDetailSheets({ id: group.id, groupId, category: group.category })
   const participationSheets = useParticipationSheets({ id: group.id, showFailure: sheets.showFailure })
   const joinAction = classifyGroupJoinAction(readGroupJoinAction(group))
+  const [isReportOpen, openReport, closeReport] = useStepFlowModalState(Activity.GROUP_DETAIL, 'report')
 
   return (
     <ScreenLayout
@@ -82,7 +86,13 @@ function GroupDetailContent({ group, groupId }: ContentProps) {
                 <img src={calendarBlue} alt="" width={24} height={24} />
               </button>
             )
-          : undefined
+          : hostAction.type === 'NOT_HOST'
+            ? () => (
+                <button type="button" aria-label="게시글 신고" onClick={openReport} {...stylex.props(styles.icon)}>
+                  <img src={declaration} alt="" width={22} height={21} />
+                </button>
+              )
+            : undefined
       }
       bottom={
         hostAction.type === 'NOT_HOST' ? (
@@ -112,6 +122,7 @@ function GroupDetailContent({ group, groupId }: ContentProps) {
       </div>
       <GroupDetailSheets sheets={sheets} />
       <ParticipationSheets sheets={participationSheets} />
+      <ReportSheet open={isReportOpen} title="게시글을 신고하시겠어요?" onClose={closeReport} />
     </ScreenLayout>
   )
 }
