@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import checkIcon from '@src/assets/profile/arrow_circle.svg'
 import { NICKNAME_MAX_LENGTH, validateNickname } from '@src/components/common/User/domain/nickname'
-import { useCheckNickname } from '@src/pages/pageProfileEdit/hooks/useCheckNickname'
+import { useCheckNickname } from '@src/components/common/User/useCheckNickname'
 import { NETWORK_ERROR_MESSAGE } from '@src/relay/mutationError'
 import { colors, fontSize, fontWeight, space } from '@src/styles/tokens.stylex'
 

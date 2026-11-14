@@ -9,4 +9,6 @@ export const Activity = {
   PROFILE_EDIT: 'ProfileEdit',
   INTRODUCTION: 'Introduction',
   INTRODUCTION_EDIT: 'IntroductionEdit',
+  LANDING: 'Landing',
+  SIGNUP: 'Signup',
 } as const

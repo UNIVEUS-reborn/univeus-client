@@ -9,10 +9,12 @@ import { GroupDetailPage } from '@src/pages/pageGroupDetail/GroupDetailPage'
 import { GroupEditPage } from '@src/pages/pageGroupEdit/GroupEditPage'
 import { IntroductionPage } from '@src/pages/pageIntroduction/IntroductionPage'
 import { IntroductionEditPage } from '@src/pages/pageIntroductionEdit/IntroductionEditPage'
+import { LandingPage } from '@src/pages/pageLanding/LandingPage'
 import { MainPage } from '@src/pages/pageMain/MainPage'
 import { ProfileEditPage } from '@src/pages/pageProfileEdit/ProfileEditPage'
 import { SearchPage } from '@src/pages/pageSearch/SearchPage'
 import { SettingsPage } from '@src/pages/pageSettings/SettingsPage'
+import { SignupPage } from '@src/pages/pageSignup/SignupPage'
 import { UserProfilePage } from '@src/pages/pageUserProfile/UserProfilePage'
 import { Activity } from '@src/routes/activityNames'
 import { config } from '@src/stackflow/config'
@@ -31,6 +33,8 @@ export const { Stack } = stackflow({
     [Activity.PROFILE_EDIT]: ProfileEditPage,
     [Activity.INTRODUCTION]: IntroductionPage,
     [Activity.INTRODUCTION_EDIT]: IntroductionEditPage,
+    [Activity.LANDING]: LandingPage,
+    [Activity.SIGNUP]: SignupPage,
   },
   plugins: [
     basicRendererPlugin(),

@@ -5,6 +5,7 @@ import { BottomNav, type BottomNavItem } from '@src/components/shared/BottomNav'
 import { ChatIcon, HomeIcon, MyIcon } from '@src/components/shared/icons'
 import { MainHeaderActions, MainHeaderLogo } from '@src/components/shared/MainHeader'
 import { ScreenLayout } from '@src/components/shared/ScreenLayout'
+import { MainAuthGate } from '@src/pages/pageMain/MainAuthGate'
 import { ChatTab } from '@src/pages/pageMain/tabs/ChatTab'
 import { HomeTab } from '@src/pages/pageMain/tabs/HomeTab'
 import { MyTab } from '@src/pages/pageMain/tabs/MyTab'
@@ -29,9 +30,11 @@ export function MainPage() {
       renderRight={() => <MainHeaderActions onSearchClick={() => push(Activity.SEARCH, {})} />}
       bottom={<BottomNav items={tabs} current={currentTab} onChange={setCurrentTab} />}
     >
-      {currentTab === 'home' && <HomeTab />}
-      {currentTab === 'chat' && <ChatTab />}
-      {currentTab === 'my' && <MyTab />}
+      <MainAuthGate>
+        {currentTab === 'home' && <HomeTab />}
+        {currentTab === 'chat' && <ChatTab />}
+        {currentTab === 'my' && <MyTab />}
+      </MainAuthGate>
     </ScreenLayout>
   )
 }

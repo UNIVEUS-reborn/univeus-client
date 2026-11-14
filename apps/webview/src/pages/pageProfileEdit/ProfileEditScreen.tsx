@@ -4,13 +4,13 @@ import { graphql, useLazyLoadQuery } from 'react-relay'
 
 import type { ProfileEditScreenQuery } from '@src/__generated__/ProfileEditScreenQuery.graphql'
 import { validateNickname } from '@src/components/common/User/domain/nickname'
+import { NicknameField, type NicknameMessage } from '@src/components/common/User/NicknameField'
+import { ProfileImageField, type ProfileImage } from '@src/components/common/User/ProfileImageField'
 import { Button } from '@src/components/shared/Button'
 import { RequestFailureSheet } from '@src/components/shared/RequestFailureSheet'
 import { ScreenLayout } from '@src/components/shared/ScreenLayout'
 import { canSaveProfile } from '@src/pages/pageProfileEdit/domain/profileSave'
 import { useUpdateProfile } from '@src/pages/pageProfileEdit/hooks/useUpdateProfile'
-import { NicknameField, type NicknameMessage } from '@src/pages/pageProfileEdit/NicknameField'
-import { ProfileImageField, type ProfileImage } from '@src/pages/pageProfileEdit/ProfileImageField'
 import { Activity } from '@src/routes/activityNames'
 import { useFlow } from '@src/stackflow/useFlow'
 import { useStepFlowModalState } from '@src/stackflow/useStepFlowModalState'
@@ -81,7 +81,12 @@ export function ProfileEditScreen() {
   return (
     <ScreenLayout title="프로필 변경">
       <div {...stylex.props(styles.body)}>
-        <ProfileImageField image={image} onChange={setImage} onUploadingChange={setIsUploading} />
+        <ProfileImageField
+          activityName={Activity.PROFILE_EDIT}
+          image={image}
+          onChange={setImage}
+          onUploadingChange={setIsUploading}
+        />
         <NicknameField
           nickname={nickname}
           message={nicknameMessage}

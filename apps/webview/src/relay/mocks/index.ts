@@ -1,5 +1,6 @@
 import type { IMocks, IMockStore } from '@graphql-tools/mock'
 
+import { authResolvers } from '@src/relay/mocks/auth'
 import { groupMocks, groupResolvers } from '@src/relay/mocks/group'
 import { profileMocks, profileResolvers } from '@src/relay/mocks/profile'
 
@@ -12,10 +13,11 @@ export const mocks: IMocks = {
 export const resolvers = (store: IMockStore) => {
   const group = groupResolvers(store)
   const profile = profileResolvers(store)
+  const auth = authResolvers(store)
   return {
     ...group,
     ...profile,
-    Query: { ...group.Query, ...profile.Query },
-    Mutation: { ...group.Mutation, ...profile.Mutation },
+    Query: { ...group.Query, ...profile.Query, ...auth.Query },
+    Mutation: { ...group.Mutation, ...profile.Mutation, ...auth.Mutation },
   }
 }

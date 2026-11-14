@@ -1,3 +1,4 @@
+import type { RegisteredActivityName } from '@stackflow/config'
 import * as stylex from '@stylexjs/stylex'
 import { useState, type ChangeEvent } from 'react'
 
@@ -7,22 +8,22 @@ import pencil from '@src/assets/profile/write.svg'
 import { ImageUploadFailureSheet } from '@src/components/common/Image/ImageUploadFailureSheet'
 import { IMAGE_ACCEPT, useUploadImage, type UploadedImage } from '@src/components/common/Image/useUploadImage'
 import { Spinner } from '@src/components/shared/Spinner'
-import { Activity } from '@src/routes/activityNames'
 import { useStepFlowModalState } from '@src/stackflow/useStepFlowModalState'
 import { colors, radius } from '@src/styles/tokens.stylex'
 
 export type ProfileImage = UploadedImage
 
 type Props = {
+  activityName: RegisteredActivityName
   image: ProfileImage | null
   onChange: (image: ProfileImage | null) => void
   onUploadingChange: (uploading: boolean) => void
 }
 
-export function ProfileImageField({ image, onChange, onUploadingChange }: Props) {
+export function ProfileImageField({ activityName, image, onChange, onUploadingChange }: Props) {
   const upload = useUploadImage('PROFILE')
   const [isUploading, setIsUploading] = useState(false)
-  const [isFailureOpen, openFailure, closeFailure] = useStepFlowModalState(Activity.PROFILE_EDIT, 'image-failure')
+  const [isFailureOpen, openFailure, closeFailure] = useStepFlowModalState(activityName, 'image-failure')
 
   const replaceImage = (next: ProfileImage | null) => {
     if (image?.isLocal === true) {

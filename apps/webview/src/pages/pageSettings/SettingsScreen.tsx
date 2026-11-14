@@ -7,6 +7,7 @@ import { UserProfileCard } from '@src/components/common/User/UserProfileCard'
 import { RequestFailureSheet } from '@src/components/shared/RequestFailureSheet'
 import { ScreenLayout } from '@src/components/shared/ScreenLayout'
 import { Toggle } from '@src/components/shared/Toggle'
+import { useSignOut } from '@src/pages/pageSettings/hooks/useSignOut'
 import { useUpdateMarketingAgreement } from '@src/pages/pageSettings/hooks/useUpdateMarketingAgreement'
 import { SettingsGroup, SettingsRow } from '@src/pages/pageSettings/SettingsMenu'
 import { Activity } from '@src/routes/activityNames'
@@ -36,11 +37,20 @@ export function SettingsScreen() {
   const [failureMessage, setFailureMessage] = useState('')
   const [isFailureOpen, openFailure, closeFailure] = useStepFlowModalState(Activity.SETTINGS, 'failure')
 
-  const handleMarketingToggle = (agreed: boolean) =>
-    updateMarketingAgreement(viewer.id, agreed, (message) => {
-      setFailureMessage(message)
-      openFailure()
-    })
+  const { signOut, isInFlight: isSigningOut } = useSignOut()
+
+  const showFailure = (message: string) => {
+    setFailureMessage(message)
+    openFailure()
+  }
+
+  const handleMarketingToggle = (agreed: boolean) => updateMarketingAgreement(viewer.id, agreed, showFailure)
+
+  const handleSignOut = () => {
+    if (!isSigningOut) {
+      signOut(showFailure)
+    }
+  }
 
   return (
     <ScreenLayout title="설정">
@@ -73,7 +83,7 @@ export function SettingsScreen() {
           </SettingsGroup>
           <hr {...stylex.props(styles.divider)} />
           <SettingsGroup>
-            <SettingsRow label="로그아웃" />
+            <SettingsRow label="로그아웃" onClick={handleSignOut} />
             <SettingsRow label="회원탈퇴" />
           </SettingsGroup>
         </div>

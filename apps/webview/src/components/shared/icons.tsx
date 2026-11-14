@@ -104,3 +104,11 @@ export function PeopleIcon({ size = 12 }: IconProps) {
     </svg>
   )
 }
+
+export function ChevronDownIcon({ size = 10 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 10 10" fill="none" aria-hidden>
+      <path d="M1 3L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}

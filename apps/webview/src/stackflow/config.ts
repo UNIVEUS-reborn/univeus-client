@@ -15,6 +15,8 @@ export const config = defineConfig({
     { name: Activity.PROFILE_EDIT, route: '/my/profile/edit' },
     { name: Activity.INTRODUCTION, route: '/my/introduction' },
     { name: Activity.INTRODUCTION_EDIT, route: '/my/introduction/edit' },
+    { name: Activity.LANDING, route: '/landing' },
+    { name: Activity.SIGNUP, route: '/signup' },
   ],
   transitionDuration: 350,
   initialActivity: () => Activity.MAIN,

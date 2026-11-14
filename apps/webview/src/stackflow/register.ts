@@ -5,10 +5,12 @@ import type {
   GroupEditParams,
   IntroductionEditParams,
   IntroductionParams,
+  LandingParams,
   MainParams,
   ProfileEditParams,
   SearchParams,
   SettingsParams,
+  SignupParams,
   UserProfileParams,
 } from '@src/routes/activityParams'
 
@@ -24,5 +26,7 @@ declare module '@stackflow/config' {
     [Activity.PROFILE_EDIT]: ProfileEditParams
     [Activity.INTRODUCTION]: IntroductionParams
     [Activity.INTRODUCTION_EDIT]: IntroductionEditParams
+    [Activity.LANDING]: LandingParams
+    [Activity.SIGNUP]: SignupParams
   }
 }

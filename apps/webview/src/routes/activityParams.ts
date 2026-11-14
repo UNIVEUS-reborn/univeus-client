@@ -34,3 +34,11 @@ export type IntroductionParams = Record<string, never>
 export type IntroductionEditParams = {
   from?: 'my'
 }
+
+export type LandingParams = Record<string, never>
+
+export type SignupStepParam = 'identity' | 'terms' | 'affiliation' | 'profile'
+
+export type SignupParams = {
+  step?: SignupStepParam
+}
