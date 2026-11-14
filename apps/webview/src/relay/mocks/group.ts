@@ -23,6 +23,8 @@ export const groupMocks: IMocks = {
       participantCount: between(0, capacity),
       status: 'RECRUITING',
       viewerRole: 'HOST',
+      viewerJoinRestriction: 'NONE',
+      participations: Array.from({ length: between(0, 3) }, () => ({})),
       images: Array.from({ length: between(0, 2) }, () => ({})),
     }
   },
@@ -41,6 +43,10 @@ export const groupMocks: IMocks = {
   CloseGroupResult: () => ({ error: null }),
   DeleteGroupResult: () => ({ error: null }),
   CreateImageUploadUrlResult: () => ({ error: null }),
+  JoinGroupResult: () => ({ error: null }),
+  CancelParticipationResult: () => ({ error: null }),
+  ApproveParticipationResult: () => ({ error: null }),
+  Participation: () => ({ status: pick(['PARTICIPATING', 'PENDING']) }),
 }
 
 type Input = Record<string, unknown> & { groupId?: string; imageIds?: string[] }
@@ -60,7 +66,11 @@ const toGroup = ({ imageIds = [], ...input }: Input) => ({
 
 export const groupResolvers = {
   Query: {
-    group: (_: unknown, { groupId }: { groupId: string }) => ({ id: stableGroupId(groupId), _id: groupId }),
+    group: (_: unknown, { groupId }: { groupId: string }) => ({
+      id: stableGroupId(groupId),
+      _id: groupId,
+      viewerRole: groupId.charCodeAt(groupId.length - 1) % 2 === 0 ? 'HOST' : 'NONE',
+    }),
   },
   Mutation: {
     createGroup: (_: unknown, { input }: { input: Input }) => ({
@@ -81,5 +91,17 @@ export const groupResolvers = {
       error: null,
     }),
     createImageUploadUrl: () => ({ uploadUrl: 'mock', imageId: crypto.randomUUID(), error: null }),
+    joinGroup: (_: unknown, { input }: { input: { groupId: string } }) => ({
+      group: { id: input.groupId, viewerRole: pick(['PARTICIPANT', 'PENDING']), viewerJoinRestriction: 'NONE' },
+      error: null,
+    }),
+    cancelParticipation: (_: unknown, { input }: { input: { groupId: string } }) => ({
+      group: { id: input.groupId, viewerRole: 'NONE', viewerJoinRestriction: 'NONE' },
+      error: null,
+    }),
+    approveParticipation: (_: unknown, { input }: { input: { participationId: string } }) => ({
+      participation: { id: input.participationId, status: 'PARTICIPATING' },
+      error: null,
+    }),
   },
 }

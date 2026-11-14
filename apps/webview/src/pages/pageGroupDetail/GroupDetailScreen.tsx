@@ -9,12 +9,18 @@ import { readGroupHostAction } from '@src/components/common/Group/domain/groupHo
 import { groupCategoryLabel } from '@src/components/common/Group/groupLabels'
 import { CenterMessage } from '@src/components/shared/CenterMessage'
 import { ScreenLayout } from '@src/components/shared/ScreenLayout'
+import { classifyGroupJoinAction } from '@src/pages/pageGroupDetail/domain/groupJoinAction'
+import { readGroupJoinAction } from '@src/pages/pageGroupDetail/domain/groupJoinAction.relay'
 import { GroupDetailBody } from '@src/pages/pageGroupDetail/GroupDetailBody'
 import { GroupDetailHost } from '@src/pages/pageGroupDetail/GroupDetailHost'
 import { GroupDetailSchedule, GroupDetailSummary } from '@src/pages/pageGroupDetail/GroupDetailInfo'
 import { GroupDetailSheets } from '@src/pages/pageGroupDetail/GroupDetailSheets'
 import { GroupHostButton } from '@src/pages/pageGroupDetail/GroupHostButton'
+import { GroupJoinButton } from '@src/pages/pageGroupDetail/GroupJoinButton'
+import { GroupParticipants } from '@src/pages/pageGroupDetail/GroupParticipants'
 import { useGroupDetailSheets } from '@src/pages/pageGroupDetail/hooks/useGroupDetailSheets'
+import { useParticipationSheets } from '@src/pages/pageGroupDetail/hooks/useParticipationSheets'
+import { ParticipationSheets } from '@src/pages/pageGroupDetail/ParticipationSheets'
 import type { Activity } from '@src/routes/activityNames'
 import { space } from '@src/styles/tokens.stylex'
 
@@ -30,6 +36,8 @@ export function GroupDetailScreen() {
           ...GroupDetailHost_group
           ...GroupDetailInfo_group
           ...GroupDetailBody_group
+          ...groupJoinAction_group
+          ...GroupParticipants_group
         }
       }
     `,
@@ -56,6 +64,8 @@ type ContentProps = {
 function GroupDetailContent({ group, groupId }: ContentProps) {
   const hostAction = classifyGroupHostAction(readGroupHostAction(group))
   const sheets = useGroupDetailSheets({ id: group.id, groupId, category: group.category })
+  const participationSheets = useParticipationSheets({ id: group.id, showFailure: sheets.showFailure })
+  const joinAction = classifyGroupJoinAction(readGroupJoinAction(group))
 
   return (
     <ScreenLayout
@@ -74,7 +84,18 @@ function GroupDetailContent({ group, groupId }: ContentProps) {
             )
           : undefined
       }
-      bottom={<GroupHostButton hostAction={hostAction} onManage={sheets.manageSheet.open} />}
+      bottom={
+        hostAction.type === 'NOT_HOST' ? (
+          <GroupJoinButton
+            joinAction={joinAction}
+            joining={participationSheets.isJoining}
+            onJoin={participationSheets.handleJoin}
+            onCancel={participationSheets.handleCancelRequest}
+          />
+        ) : (
+          <GroupHostButton hostAction={hostAction} onManage={sheets.manageSheet.open} />
+        )
+      }
     >
       <div {...stylex.props(styles.body)}>
         <div {...stylex.props(styles.top)}>
@@ -83,8 +104,14 @@ function GroupDetailContent({ group, groupId }: ContentProps) {
         </div>
         <GroupDetailSchedule groupRef={group} />
         <GroupDetailBody groupRef={group} />
+        <GroupParticipants
+          groupRef={group}
+          approving={participationSheets.isApproving}
+          onApprove={participationSheets.handleApprove}
+        />
       </div>
       <GroupDetailSheets sheets={sheets} />
+      <ParticipationSheets sheets={participationSheets} />
     </ScreenLayout>
   )
 }

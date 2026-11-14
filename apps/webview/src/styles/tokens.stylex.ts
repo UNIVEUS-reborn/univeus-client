@@ -68,6 +68,7 @@ export const shadow = stylex.defineVars({
   header: '0 0.5px 10px rgba(0, 0, 0, 0.1)',
   floating: '0 2px 11px rgba(0, 0, 0, 0.25)',
   sheet: '0 -4px 10px rgba(191, 195, 212, 0.24)',
+  card: '0 2px 11px rgba(0, 0, 0, 0.1)',
 })
 
 export const size = stylex.defineVars({

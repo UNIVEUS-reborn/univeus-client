@@ -1,8 +1,6 @@
-import * as stylex from '@stylexjs/stylex'
-
 import type { GroupHostAction } from '@src/components/common/Group/domain/groupHostAction'
 import { Button } from '@src/components/shared/Button'
-import { space } from '@src/styles/tokens.stylex'
+import { GroupDetailBottom } from '@src/pages/pageGroupDetail/GroupDetailBottom'
 
 type Props = {
   hostAction: GroupHostAction
@@ -13,29 +11,21 @@ export function GroupHostButton({ hostAction, onManage }: Props) {
   switch (hostAction.type) {
     case 'MANAGE':
       return (
-        <div {...stylex.props(styles.bottom)}>
+        <GroupDetailBottom>
           <Button variant="floating" onClick={onManage}>
             유니버스 관리하기
           </Button>
-        </div>
+        </GroupDetailBottom>
       )
     case 'CLOSED':
       return (
-        <div {...stylex.props(styles.bottom)}>
+        <GroupDetailBottom>
           <Button variant="floating" disabled>
             유니버스 모집 종료
           </Button>
-        </div>
+        </GroupDetailBottom>
       )
     case 'NOT_HOST':
       return null
   }
 }
-
-const styles = stylex.create({
-  bottom: {
-    width: '90%',
-    marginInline: 'auto',
-    paddingBottom: `max(${space.x4}, env(safe-area-inset-bottom))`,
-  },
-})

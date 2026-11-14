@@ -12,7 +12,7 @@ type Group = {
   category: string
 }
 
-function useSheet(modalId: string) {
+export function useSheet(modalId: string) {
   const [isOpen, open, close] = useStepFlowModalState(Activity.GROUP_DETAIL, modalId)
   return { isOpen, open, close }
 }
@@ -71,6 +71,7 @@ export function useGroupDetailSheets({ id, groupId, category }: Group) {
     deleteDoneSheet,
     failureSheet,
     failureMessage,
+    showFailure,
     isClosing,
     isDeleting,
     handleCloseConfirm,
