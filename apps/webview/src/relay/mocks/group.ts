@@ -59,6 +59,9 @@ export function groupResolvers(store: IMockStore) {
   const participationMethods = new Map<string, string>()
   const viewerParticipations = new Map<string, Ref>()
 
+  const participationMethodOf = (key: string) =>
+    participationMethods.get(key) ?? (isEvenAt(key, 2) ? 'AUTO_APPROVAL' : 'MANUAL_APPROVAL')
+
   const refOf = (typeName: string, key: string): Ref => {
     const ref = store.get(typeName, key)
     if (!isRef(ref)) {
@@ -97,8 +100,7 @@ export function groupResolvers(store: IMockStore) {
     Group: {
       _id: (group: Ref) => group.$ref.key,
       viewerRole: (group: Ref) => viewerRoles.get(group.$ref.key) ?? (isEvenAt(group.$ref.key, 1) ? 'HOST' : 'NONE'),
-      participationMethod: (group: Ref) =>
-        participationMethods.get(group.$ref.key) ?? (isEvenAt(group.$ref.key, 2) ? 'AUTO_APPROVAL' : 'MANUAL_APPROVAL'),
+      participationMethod: (group: Ref) => participationMethodOf(group.$ref.key),
       participantCount: (group: Ref) => countParticipating(group),
       participations: (group: Ref) => {
         const items = participationsOf(group)
@@ -137,7 +139,7 @@ export function groupResolvers(store: IMockStore) {
       createImageUploadUrl: () => ({ uploadUrl: 'mock', imageId: crypto.randomUUID(), error: null }),
       joinGroup: (_: unknown, { input }: { input: { groupId: string } }) => {
         const group = refOf('Group', input.groupId)
-        const isAuto = store.get(group, 'participationMethod') === 'AUTO_APPROVAL'
+        const isAuto = participationMethodOf(input.groupId) === 'AUTO_APPROVAL'
         const participation = refOf('Participation', crypto.randomUUID())
         store.set(participation, 'status', isAuto ? 'PARTICIPATING' : 'PENDING')
         store.set(group, 'participations', [...participationsOf(group), participation])
