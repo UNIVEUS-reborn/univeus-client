@@ -26,4 +26,29 @@ describe('executeMock', () => {
     )
     expect(result.data.deleteGroup).toEqual({ deletedId: 'group-1', error: null })
   })
+
+  it('목록 카드와 상세가 같은 모임을 돌려줘요', async () => {
+    const list = await executeMock('{ groups(first: 1) { edges { node { id _id title participantCount } } } }', {})
+    const card = list.data.groups.edges[0].node
+    const detail = await executeMock('query ($id: ID!) { group(groupId: $id) { id title participantCount } }', {
+      id: card._id,
+    })
+    expect(detail.data.group).toEqual({ id: card.id, title: card.title, participantCount: card.participantCount })
+  })
+
+  it('참여 결과는 모임 ID로 정해져요', async () => {
+    const join = (groupId: string) =>
+      executeMock(
+        'mutation ($input: JoinGroupInput!) { joinGroup(input: $input) { group { viewerRole participationMethod } } }',
+        { input: { groupId } },
+      )
+    expect((await join('aa1')).data.joinGroup.group).toEqual({
+      viewerRole: 'PENDING',
+      participationMethod: 'MANUAL_APPROVAL',
+    })
+    expect((await join('ab1')).data.joinGroup.group).toEqual({
+      viewerRole: 'PARTICIPANT',
+      participationMethod: 'AUTO_APPROVAL',
+    })
+  })
 })

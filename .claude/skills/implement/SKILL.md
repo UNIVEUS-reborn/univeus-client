@@ -33,7 +33,8 @@ verify에서 돌아온 경우 `verify.md`의 실패 항목만 고쳐요.
 - tech-spec의 상태 종류, 핸들러 위치, UI 분기를 그대로 따라요. 다르게 해야 하면 멈추고 물어봐요
 - 새 UI 요소를 만들기 전에 `components/shared`, `components/common`에 이미 있는지 찾아요
 - 레거시의 검증 가드를 UI prop 제약으로만 대체하지 않아요
-- mock resolver는 같은 인자로 조회한 root 필드에 같은 `id`를 돌려줘요. 매번 다른 `id`면 다른 query가 같은 root 링크를 덮어써서 다른 화면이 깨져요
+- mock은 graphql-tools store에 엔티티를 저장해서, 목록·상세·mutation 결과가 같은 `id`의 같은 데이터를 돌려줘요. 매번 새로 지어내면 다른 query가 같은 레코드를 덮어쓰고 목록 반영을 확인할 수 없어요
+- 화면 분기를 가르는 mock 값(호스트 여부, 승인 결과 등)은 랜덤이 아니라 입력 ID로 정해요. 어떤 ID가 어떤 분기인지 implement-summary에 적어요
 - 사용자에게 보이는 문구는 legacy-spec 문구를 기준으로 써요
 - 주석을 달지 않아요
 - graphql 태그를 바꿀 때마다 `bun run relay`
