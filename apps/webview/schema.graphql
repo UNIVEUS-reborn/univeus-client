@@ -158,6 +158,59 @@ type Viewer implements Node {
 }
 
 """
+로그인 상태
+"""
+enum AuthStatus {
+  """
+  로그아웃
+  """
+  SIGNED_OUT
+  """
+  로그인했지만 회원가입을 끝내지 않음
+  """
+  SIGNING_UP
+  """
+  로그인, 회원가입 완료
+  """
+  SIGNED_IN
+}
+
+"""
+회원가입 단계 (순서대로)
+"""
+enum SignupStep {
+  """
+  휴대폰 본인인증
+  """
+  IDENTITY_VERIFICATION
+  """
+  약관동의
+  """
+  TERMS_AGREEMENT
+  """
+  소속등록
+  """
+  AFFILIATION
+  """
+  프로필 등록
+  """
+  PROFILE
+}
+
+"""
+현재 로그인 상태. 서버 세션·토큰과는 관계없어요 (인증은 쿠키로만 오가요).
+id는 사용자·로그인 여부와 관계없이 항상 같은 고정값("AuthState")이라, 가입 mutation 결과가 root의 authState와 같은 레코드로 합쳐져요
+"""
+type AuthState implements Node {
+  id: ID!
+  status: AuthStatus!
+  """
+  끝내지 않은 첫 가입 단계. SIGNING_UP일 때만 있어요
+  """
+  signupStep: SignupStep
+}
+
+"""
 닉네임 사용 가능 여부
 """
 enum NicknameAvailability {
@@ -383,6 +436,10 @@ type Query {
   닉네임 중복확인. 지금 내 닉네임이면 AVAILABLE
   """
   nicknameAvailability(nickname: String!): NicknameAvailability!
+  """
+  로그인 상태. 로그아웃이어도 답해요
+  """
+  authState: AuthState!
 }
 
 type Mutation {
@@ -415,6 +472,34 @@ type Mutation {
   문자 및 마케팅 수신동의 변경
   """
   updateMarketingAgreement(input: UpdateMarketingAgreementInput!): UpdateMarketingAgreementResult!
+  """
+  구글 로그인. 서버가 인증 쿠키를 설정해요
+  """
+  signInWithGoogle(input: SignInWithGoogleInput!): SignInWithGoogleResult!
+  """
+  로그아웃. 입력이 없어서 input을 받지 않아요
+  """
+  signOut: SignOutResult!
+  """
+  본인인증 번호 발송
+  """
+  requestPhoneVerification(input: RequestPhoneVerificationInput!): RequestPhoneVerificationResult!
+  """
+  본인인증 번호 확인. 성공하면 다음 가입 단계로 가요
+  """
+  verifyPhone(input: VerifyPhoneInput!): VerifyPhoneResult!
+  """
+  약관동의
+  """
+  agreeToTerms(input: AgreeToTermsInput!): AgreeToTermsResult!
+  """
+  소속등록
+  """
+  registerAffiliation(input: RegisterAffiliationInput!): RegisterAffiliationResult!
+  """
+  프로필 등록. 성공하면 가입 완료
+  """
+  registerProfile(input: RegisterProfileInput!): RegisterProfileResult!
 }
 
 """
@@ -773,3 +858,157 @@ union ErrorSaveIntroduction = InvalidIntroductionInputError | UnexpectedError
 union ErrorUpdateProfile = DuplicatedNicknameError | InvalidNicknameError | UnexpectedError
 
 union ErrorUpdateMarketingAgreement = UnexpectedError
+
+input SignInWithGoogleInput {
+  """
+  구글 OpenID Connect ID 토큰
+  """
+  googleIdToken: String!
+}
+
+input RequestPhoneVerificationInput {
+  """
+  숫자 11자리 (하이픈 없음)
+  """
+  phoneNumber: String!
+}
+
+input VerifyPhoneInput {
+  """
+  숫자 11자리 (하이픈 없음)
+  """
+  phoneNumber: String!
+  """
+  숫자 6자리
+  """
+  code: String!
+}
+
+input AgreeToTermsInput {
+  """
+  이용약관 동의 (필수)
+  """
+  serviceTerms: Boolean!
+  """
+  개인정보 제공 및 활용 동의 (필수)
+  """
+  privacyPolicy: Boolean!
+  """
+  문자 수신 동의 (선택). Viewer.marketingAgreed와 같은 값이에요
+  """
+  marketing: Boolean!
+}
+
+input RegisterAffiliationInput {
+  college: College!
+  """
+  전체 학번, 숫자 9자리. 서버가 입학 연도를 정해요
+  """
+  studentId: String!
+}
+
+input RegisterProfileInput {
+  """
+  2~13자, 특수문자 불가
+  """
+  nickname: String!
+  gender: Gender!
+  """
+  Image.id (createImageUploadUrl의 imageId, purpose PROFILE). 사진 없이 가입하면 null
+  """
+  profileImageId: ID
+}
+
+type SignInWithGoogleResult {
+  authState: AuthState
+  error: ErrorSignInWithGoogle
+}
+
+type SignOutResult {
+  authState: AuthState
+  error: ErrorSignOut
+}
+
+type RequestPhoneVerificationResult {
+  """
+  발송 성공
+  """
+  success: Boolean
+  error: ErrorRequestPhoneVerification
+}
+
+type VerifyPhoneResult {
+  authState: AuthState
+  error: ErrorVerifyPhone
+}
+
+type AgreeToTermsResult {
+  authState: AuthState
+  error: ErrorAgreeToTerms
+}
+
+type RegisterAffiliationResult {
+  authState: AuthState
+  error: ErrorRegisterAffiliation
+}
+
+type RegisterProfileResult {
+  authState: AuthState
+  error: ErrorRegisterProfile
+}
+
+"""
+경기대학교 메일 계정이 아님
+"""
+type NotUniversityEmailError {
+  message: String!
+}
+
+"""
+구글 ID 토큰이 유효하지 않음
+"""
+type InvalidGoogleTokenError {
+  message: String!
+}
+
+"""
+휴대폰 번호 형식 오류
+"""
+type InvalidPhoneNumberError {
+  message: String!
+}
+
+"""
+인증번호가 일치하지 않음
+"""
+type InvalidVerificationCodeError {
+  message: String!
+}
+
+"""
+필수 약관에 동의하지 않음
+"""
+type RequiredTermsNotAgreedError {
+  message: String!
+}
+
+"""
+학번 형식 오류 (숫자 9자리)
+"""
+type InvalidStudentIdError {
+  message: String!
+}
+
+union ErrorSignInWithGoogle = NotUniversityEmailError | InvalidGoogleTokenError | UnexpectedError
+
+union ErrorSignOut = UnexpectedError
+
+union ErrorRequestPhoneVerification = InvalidPhoneNumberError | UnexpectedError
+
+union ErrorVerifyPhone = InvalidVerificationCodeError | UnexpectedError
+
+union ErrorAgreeToTerms = RequiredTermsNotAgreedError | UnexpectedError
+
+union ErrorRegisterAffiliation = InvalidStudentIdError | UnexpectedError
+
+union ErrorRegisterProfile = DuplicatedNicknameError | InvalidNicknameError | UnexpectedError
