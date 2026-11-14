@@ -2,6 +2,7 @@ import * as stylex from '@stylexjs/stylex'
 
 import { BottomSheet } from '@src/components/shared/BottomSheet'
 import { Button } from '@src/components/shared/Button'
+import { RequestFailureSheet } from '@src/components/shared/RequestFailureSheet'
 import { colors } from '@src/styles/tokens.stylex'
 
 type Props = {
@@ -24,18 +25,7 @@ export function GroupFormResultSheets({ done, failure }: Props) {
       >
         <p {...stylex.props(styles.text)}>{done.message}</p>
       </BottomSheet>
-      <BottomSheet
-        open={failure.open}
-        onClose={failure.onClose}
-        title="요청에 실패했어요"
-        actions={
-          <Button variant="floating" onClick={failure.onClose}>
-            확인
-          </Button>
-        }
-      >
-        <p {...stylex.props(styles.text)}>{failure.message}</p>
-      </BottomSheet>
+      <RequestFailureSheet open={failure.open} message={failure.message} onClose={failure.onClose} />
     </>
   )
 }

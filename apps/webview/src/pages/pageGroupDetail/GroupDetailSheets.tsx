@@ -2,6 +2,7 @@ import * as stylex from '@stylexjs/stylex'
 
 import { BottomSheet } from '@src/components/shared/BottomSheet'
 import { Button } from '@src/components/shared/Button'
+import { RequestFailureSheet } from '@src/components/shared/RequestFailureSheet'
 import type { GroupDetailSheetsState } from '@src/pages/pageGroupDetail/hooks/useGroupDetailSheets'
 import { colors } from '@src/styles/tokens.stylex'
 
@@ -89,18 +90,7 @@ export function GroupDetailSheets({ sheets }: Props) {
       >
         <Text>{'다시 모집하고 싶으시다면\n새로운 게시글을 작성해주세요.'}</Text>
       </BottomSheet>
-      <BottomSheet
-        open={failureSheet.isOpen}
-        onClose={failureSheet.close}
-        title="요청에 실패했어요"
-        actions={
-          <Button variant="floating" onClick={failureSheet.close}>
-            확인
-          </Button>
-        }
-      >
-        <Text>{sheets.failureMessage}</Text>
-      </BottomSheet>
+      <RequestFailureSheet open={failureSheet.isOpen} message={sheets.failureMessage} onClose={failureSheet.close} />
     </>
   )
 }
