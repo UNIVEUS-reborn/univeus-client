@@ -35,6 +35,7 @@ verify에서 돌아온 경우 `verify.md`의 실패 항목만 고쳐요.
 - 레거시의 검증 가드를 UI prop 제약으로만 대체하지 않아요
 - mock은 graphql-tools store에 엔티티를 저장해서, 목록·상세·mutation 결과가 같은 `id`의 같은 데이터를 돌려줘요. 매번 새로 지어내면 다른 query가 같은 레코드를 덮어쓰고 목록 반영을 확인할 수 없어요
 - 화면 분기를 가르는 mock 값(호스트 여부, 승인 결과 등)은 랜덤이 아니라 입력 ID로 정해요. 어떤 ID가 어떤 분기인지 implement-summary에 적어요
+- mutation마다 에러 분기를 입력으로 고를 수 있는 mock 규칙을 하나씩 둬요 (예: 닉네임에 "중복"이 들어가면 `DuplicatedNicknameError`). 입력으로 고를 수 없으면 verify에서 mock을 잠깐 바꿔 확인하고 되돌려요
 - 사용자에게 보이는 문구는 legacy-spec 문구를 기준으로 써요
 - 주석을 달지 않아요
 - graphql 태그를 바꿀 때마다 `bun run relay`

@@ -41,7 +41,7 @@ argument-hint: '<도메인명>'
 ### 3-3. 데이터
 
 - 페이지 query (이름, 변수, fetchPolicy). `network-only`는 쓰지 않아요 (architecture.md Relay)
-- 컴포넌트별 fragment (이름, 필드)
+- 컴포넌트별 fragment (이름, 필드). fragment 이름은 파일 이름으로 시작해야 해서, 한 컴포넌트가 pagination fragment 여러 개를 쓰면 파일을 fragment마다 나눠 설계해요
 - connection key와 페이지네이션
 - mutation별: 호출 위치, `error.__typename` 분기와 각 케이스의 UI, connection 갱신 방법 (Edge / deletedId / 자동)
 - mock network에 필요한 데이터 (mock resolver, 고정 값)

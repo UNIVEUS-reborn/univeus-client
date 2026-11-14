@@ -96,6 +96,7 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 - optimisticResponse에 fragment 데이터를 spread하지 않아요
 - 페이지마다 Suspense 경계를 둬요
 - `fetchPolicy: 'network-only'`는 쓰지 않아요. React 19 StrictMode가 Suspense 내용이 다시 보일 때 effect를 다시 실행하고, Relay가 그때마다 새로 요청하면서 무한 요청이 생겨요 (facebook/react#30799). 최신 값이 필요하면 `store-and-network`를 써요
+- 버튼을 눌러 한 번 묻는 조회는 `fetchQuery`를 써요. 기본값이 `network-only`라 fetchPolicy를 넘기지 않아요
 - graphql 태그를 수정하면 바로 `bun run relay`를 실행하고, 필드·enum은 `schema.graphql`에서 확인해요
 - 서버가 없는 동안은 mock network가 `schema.graphql` 기준으로 응답해요
 
