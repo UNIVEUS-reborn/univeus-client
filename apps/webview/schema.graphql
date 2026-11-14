@@ -140,7 +140,8 @@ type UserIntroduction {
 """
 로그인한 사람. 본인만 보는 정보를 둬요
 """
-type Viewer {
+type Viewer implements Node {
+  id: ID!
   user: User!
   """
   내가 만든 모임 (최신 순)
