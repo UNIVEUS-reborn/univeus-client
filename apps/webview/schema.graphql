@@ -89,6 +89,89 @@ type User implements Node {
   인증 회원 여부 (모임 카드·상세의 인증 뱃지, 지급 기준은 서버가 정함)
   """
   isVerified: Boolean!
+  """
+  조회한 사람 본인인지. 프로필을 누르면 본인은 마이 탭, 아니면 유저 프로필로 가요
+  """
+  isViewer: Boolean!
+  """
+  N문 N답. 작성하지 않았으면 null
+  """
+  introduction: UserIntroduction
+  """
+  만든 모임 수
+  """
+  createdGroupCount: Int!
+  """
+  참여한 모임 수 (승인된 참여만, 승인 대기 제외)
+  """
+  joinedGroupCount: Int!
+}
+
+"""
+N문 N답. 답하지 않은 질문은 null
+"""
+type UserIntroduction {
+  """
+  나의 MBTI는
+  """
+  mbti: String
+  """
+  나의 최애 음식은
+  """
+  favoriteFood: String
+  """
+  내가 요새 듣는노래는
+  """
+  recentSong: String
+  """
+  나의 관심사는
+  """
+  interest: String
+  """
+  이런 사람이랑 잘 맞아요
+  """
+  matchingPerson: String
+  """
+  대학생활동안 제일 해보고 싶은건
+  """
+  collegeGoal: String
+}
+
+"""
+로그인한 사람. 본인만 보는 정보를 둬요
+"""
+type Viewer {
+  user: User!
+  """
+  내가 만든 모임 (최신 순)
+  """
+  createdGroups(first: Int, after: ID): GroupConnection!
+  """
+  내가 참여한 모임 (승인 대기 포함, 최신 순)
+  """
+  joinedGroups(first: Int, after: ID): GroupConnection!
+  """
+  문자 및 마케팅 수신동의
+  """
+  marketingAgreed: Boolean!
+}
+
+"""
+닉네임 사용 가능 여부
+"""
+enum NicknameAvailability {
+  """
+  사용 가능
+  """
+  AVAILABLE
+  """
+  이미 쓰는 닉네임
+  """
+  DUPLICATED
+  """
+  형식 오류 (2~13자, 특수문자 불가)
+  """
+  INVALID_FORMAT
 }
 
 """
@@ -287,6 +370,18 @@ type Query {
   groupId: Group._id (URL 경로의 ID)
   """
   group(groupId: ID!): Group
+  """
+  로그인한 사람
+  """
+  viewer: Viewer!
+  """
+  userId: User._id (URL 경로의 ID)
+  """
+  user(userId: ID!): User
+  """
+  닉네임 중복확인. 지금 내 닉네임이면 AVAILABLE
+  """
+  nicknameAvailability(nickname: String!): NicknameAvailability!
 }
 
 type Mutation {
@@ -307,6 +402,18 @@ type Mutation {
   호스트가 승인 대기를 승인
   """
   approveParticipation(input: ApproveParticipationInput!): ApproveParticipationResult!
+  """
+  N문 N답 저장 (처음 작성과 수정 모두). 전체 값을 다시 보내요
+  """
+  saveIntroduction(input: SaveIntroductionInput!): SaveIntroductionResult!
+  """
+  프로필 변경 (닉네임, 프로필 사진)
+  """
+  updateProfile(input: UpdateProfileInput!): UpdateProfileResult!
+  """
+  문자 및 마케팅 수신동의 변경
+  """
+  updateMarketingAgreement(input: UpdateMarketingAgreementInput!): UpdateMarketingAgreementResult!
 }
 
 """
@@ -583,3 +690,85 @@ union ErrorJoinGroup = NotFoundGroupError | GroupAlreadyClosedError | AlreadyJoi
 union ErrorCancelParticipation = NotFoundGroupError | GroupAlreadyClosedError | NotGroupParticipantError | UnexpectedError
 
 union ErrorApproveParticipation = NotFoundParticipationError | NotGroupHostError | GroupAlreadyClosedError | ParticipationAlreadyApprovedError | UnexpectedError
+
+"""
+N문 N답 입력. 빈 답은 null, 각 답은 최대 30자
+"""
+input SaveIntroductionInput {
+  mbti: String
+  favoriteFood: String
+  recentSong: String
+  interest: String
+  matchingPerson: String
+  collegeGoal: String
+}
+
+input UpdateProfileInput {
+  """
+  2~13자, 특수문자 불가
+  """
+  nickname: String!
+  """
+  Image.id (createImageUploadUrl의 imageId, purpose PROFILE). null이면 사진을 지워요
+  """
+  profileImageId: ID
+}
+
+input UpdateMarketingAgreementInput {
+  agreed: Boolean!
+}
+
+type SaveIntroductionResult {
+  user: User
+  error: ErrorSaveIntroduction
+}
+
+type UpdateProfileResult {
+  user: User
+  error: ErrorUpdateProfile
+}
+
+type UpdateMarketingAgreementResult {
+  viewer: Viewer
+  error: ErrorUpdateMarketingAgreement
+}
+
+"""
+N문 N답 입력 항목
+"""
+enum IntroductionField {
+  MBTI
+  FAVORITE_FOOD
+  RECENT_SONG
+  INTEREST
+  MATCHING_PERSON
+  COLLEGE_GOAL
+}
+
+"""
+N문 N답 답이 30자를 넘음
+"""
+type InvalidIntroductionInputError {
+  message: String!
+  field: IntroductionField!
+}
+
+"""
+이미 쓰는 닉네임
+"""
+type DuplicatedNicknameError {
+  message: String!
+}
+
+"""
+닉네임 형식 오류 (2~13자, 특수문자 불가)
+"""
+type InvalidNicknameError {
+  message: String!
+}
+
+union ErrorSaveIntroduction = InvalidIntroductionInputError | UnexpectedError
+
+union ErrorUpdateProfile = DuplicatedNicknameError | InvalidNicknameError | UnexpectedError
+
+union ErrorUpdateMarketingAgreement = UnexpectedError
