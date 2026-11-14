@@ -18,4 +18,12 @@ describe('executeMock', () => {
     const result = await executeMock('{ unknownField }', {})
     expect(result.errors).toHaveLength(1)
   })
+
+  it('모임을 삭제하면 요청한 ID를 deletedId로 돌려줘요', async () => {
+    const result = await executeMock(
+      'mutation ($input: DeleteGroupInput!) { deleteGroup(input: $input) { deletedId error { __typename } } }',
+      { input: { groupId: 'group-1' } },
+    )
+    expect(result.data.deleteGroup).toEqual({ deletedId: 'group-1', error: null })
+  })
 })

@@ -10,6 +10,7 @@ import { HomeTab } from '@src/pages/pageMain/tabs/HomeTab'
 import { MyTab } from '@src/pages/pageMain/tabs/MyTab'
 import { Activity } from '@src/routes/activityNames'
 import type { MainTab } from '@src/routes/activityParams'
+import { useFlow } from '@src/stackflow/useFlow'
 
 const tabs: BottomNavItem<MainTab>[] = [
   { key: 'home', label: '홈', Icon: HomeIcon },
@@ -18,13 +19,14 @@ const tabs: BottomNavItem<MainTab>[] = [
 ]
 
 export function MainPage() {
+  const { push } = useFlow()
   const params = useActivityParams<typeof Activity.MAIN>()
   const [currentTab, setCurrentTab] = useState<MainTab>(params.tab ?? 'home')
 
   return (
     <ScreenLayout
       renderLeft={() => <MainHeaderLogo />}
-      renderRight={() => <MainHeaderActions />}
+      renderRight={() => <MainHeaderActions onSearchClick={() => push(Activity.SEARCH, {})} />}
       bottom={<BottomNav items={tabs} current={currentTab} onChange={setCurrentTab} />}
     >
       {currentTab === 'home' && <HomeTab />}
