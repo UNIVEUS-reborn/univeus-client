@@ -23,6 +23,7 @@ argument-hint: '<도메인명>'
 - [ ] ID 인자: URL 단건 조회는 `_id`, Mutation Input은 global `id`, 주석에 명시
 - [ ] Connection: `edges`, `pageInfo`, Edge의 `node`·`cursor`. `totalCount`는 개수를 보여주는 화면이 있을 때만
 - [ ] Mutation: `input` 하나, Result 래퍼, `Error{Action}{Entity}` union 끝에 `UnexpectedError`
+- [ ] 에러 타입 이름은 `{Reason}Error` (예: `NotFoundGroupError`)
 - [ ] 에러 타입마다 `message: String!`, 클라이언트 분기에 필요한 정보는 필드로
 - [ ] 입력칸 에러 표시가 필요하면 enum 필드
 - [ ] 리스트와 요소 non-null, ID는 `ID` 타입, enum 값마다 한글 주석

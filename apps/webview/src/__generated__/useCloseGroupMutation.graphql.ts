@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<897d2b14e871a7b69cd4d396cd2117cb>>
+ * @generated SignedSource<<d94bbebc4c6db0e5435acabe4693a1fd>>
  * @lightSyntaxTransform
  */
 
@@ -18,13 +18,13 @@ export type useCloseGroupMutation$variables = {
 export type useCloseGroupMutation$data = {
   readonly closeGroup: {
     readonly error: {
-      readonly __typename: "GroupAlreadyClosed";
+      readonly __typename: "GroupAlreadyClosedError";
       readonly message: string;
     } | {
-      readonly __typename: "NotFoundGroup";
+      readonly __typename: "NotFoundGroupError";
       readonly message: string;
     } | {
-      readonly __typename: "NotGroupHost";
+      readonly __typename: "NotGroupHostError";
       readonly message: string;
     } | {
       readonly __typename: "UnexpectedError";
@@ -120,19 +120,19 @@ v2 = [
           {
             "kind": "InlineFragment",
             "selections": (v1/*:: as any*/),
-            "type": "NotFoundGroup",
+            "type": "NotFoundGroupError",
             "abstractKey": null
           },
           {
             "kind": "InlineFragment",
             "selections": (v1/*:: as any*/),
-            "type": "NotGroupHost",
+            "type": "NotGroupHostError",
             "abstractKey": null
           },
           {
             "kind": "InlineFragment",
             "selections": (v1/*:: as any*/),
-            "type": "GroupAlreadyClosed",
+            "type": "GroupAlreadyClosedError",
             "abstractKey": null
           },
           {
@@ -166,16 +166,16 @@ return {
     "selections": (v2/*:: as any*/)
   },
   "params": {
-    "cacheID": "1407f69db4f472ace371dcf7199abe0d",
+    "cacheID": "820c9dadb5805672d75d966416104e23",
     "id": null,
     "metadata": {},
     "name": "useCloseGroupMutation",
     "operationKind": "mutation",
-    "text": "mutation useCloseGroupMutation(\n  $input: CloseGroupInput!\n) {\n  closeGroup(input: $input) {\n    group {\n      id\n      status\n    }\n    error {\n      __typename\n      ... on NotFoundGroup {\n        message\n      }\n      ... on NotGroupHost {\n        message\n      }\n      ... on GroupAlreadyClosed {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCloseGroupMutation(\n  $input: CloseGroupInput!\n) {\n  closeGroup(input: $input) {\n    group {\n      id\n      status\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "81bed0f3554965c396bc075d92ca2a04";
+(node as any).hash = "01f493148fae138a1a11179ad74d6726";
 
 export default node;

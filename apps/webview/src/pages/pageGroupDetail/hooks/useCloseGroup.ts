@@ -18,13 +18,13 @@ export function useCloseGroup() {
         }
         error {
           __typename
-          ... on NotFoundGroup {
+          ... on NotFoundGroupError {
             message
           }
-          ... on NotGroupHost {
+          ... on NotGroupHostError {
             message
           }
-          ... on GroupAlreadyClosed {
+          ... on GroupAlreadyClosedError {
             message
           }
           ... on UnexpectedError {

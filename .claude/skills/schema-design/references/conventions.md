@@ -63,12 +63,13 @@ type CreateGroupResult {
   error: ErrorCreateGroup
 }
 
-union ErrorCreateGroup = InvalidGroupInput | UnexpectedError
+union ErrorCreateGroup = InvalidGroupInputError | UnexpectedError
 ```
 
 - 인자는 `input` 하나
 - 성공 필드와 `error`는 둘 다 nullable
 - 에러 union 이름은 `Error{Action}{Entity}`, 마지막에 `UnexpectedError`
+- 에러 타입 이름은 `{Reason}Error`로 끝나요 (예: `NotFoundGroupError`, `GroupAlreadyClosedError`)
 - 에러 타입은 `message: String!`을 가져요. 클라이언트가 분기에 쓸 추가 정보는 필드로 둬요 (예: `participantCount`)
 - 클라이언트가 입력칸에 에러를 표시해야 하면 문자열 대신 enum 필드를 둬요 (예: `field: GroupInputField`)
 - 로그인 필요 같은 공통 인증 에러는 Result에 넣지 않고 GraphQL 최상위 `errors`로 처리해요

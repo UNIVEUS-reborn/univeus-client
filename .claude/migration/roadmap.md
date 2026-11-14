@@ -9,7 +9,7 @@
 | ---- | ------------- | -------------------------------------------------------------- | ------ | ----- |
 | C0   | base          | routes, stackflow, 토큰, ScreenLayout, BottomNav, mock network | -      | ✅    |
 | C1   | group         | 홈 탭, 검색, 모임 상세, 모임 작성/수정, 관리 시트              | ✅     | ✅    |
-| C2   | participation | 참여 신청/취소/승인, 참여자 목록                               | ⬜     | ⬜    |
+| C2   | participation | 참여 신청/취소/승인, 참여자 목록                               | ✅     | ⬜    |
 | C3   | profile       | 마이 탭, 유저 프로필, 신고, N문 N답, 프로필 수정, 설정         | ⬜     | ⬜    |
 | C4   | auth          | 랜딩(구글 로그인), 회원가입 4단계                              | ⬜     | ⬜    |
 
@@ -32,10 +32,13 @@
 - 인증 뱃지는 `User.isVerified`로 받아요
 - 바텀시트는 activity가 아니라 페이지 안 컴포넌트예요. 열림 상태는 `useStepFlowModalState`로 step params에 둬서 뒤로가기로 닫혀요
 - 마감된 모임은 수정만 막고 삭제는 허용해요
+- 참여 인원(`participantCount`)은 승인된 참여자만 세요
+- 승인·참여 취소는 모집 중에만 돼요. 모집이 끝나면 서버가 승인 대기를 지워요
+- 참여 거절 기능은 없어요 (레거시대로 승인만)
 - schema 원본은 서버 레포에 둬요. `apps/webview/schema.graphql`은 서버가 생기기 전까지 클라이언트에서 먼저 설계하는 사본이에요
 
 ## 미정
 
 - 인증 뱃지(`User.isVerified`) 지급 기준
 - 이미지 개수 제한
-- 탈퇴한 호스트의 모임 처리 (`Group.host` nullability)
+- 탈퇴한 호스트·참여자 처리 (`Group.host`, `Participation.user` nullability)

@@ -22,19 +22,19 @@ export function useUpdateGroup() {
         }
         error {
           __typename
-          ... on NotFoundGroup {
+          ... on NotFoundGroupError {
             message
           }
-          ... on NotGroupHost {
+          ... on NotGroupHostError {
             message
           }
-          ... on GroupAlreadyClosed {
+          ... on GroupAlreadyClosedError {
             message
           }
-          ... on InvalidGroupInput {
+          ... on InvalidGroupInputError {
             message
           }
-          ... on CapacityBelowParticipants {
+          ... on CapacityBelowParticipantsError {
             message
           }
           ... on UnexpectedError {

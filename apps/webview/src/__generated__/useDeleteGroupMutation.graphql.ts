@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c51ac47ba23adc071d34cf655cb03961>>
+ * @generated SignedSource<<a6a94a38c44045e4525020d59905e46f>>
  * @lightSyntaxTransform
  */
 
@@ -19,10 +19,10 @@ export type useDeleteGroupMutation$data = {
   readonly deleteGroup: {
     readonly deletedId: string | null | undefined;
     readonly error: {
-      readonly __typename: "NotFoundGroup";
+      readonly __typename: "NotFoundGroupError";
       readonly message: string;
     } | {
-      readonly __typename: "NotGroupHost";
+      readonly __typename: "NotGroupHostError";
       readonly message: string;
     } | {
       readonly __typename: "UnexpectedError";
@@ -91,13 +91,13 @@ v5 = {
     {
       "kind": "InlineFragment",
       "selections": (v4/*:: as any*/),
-      "type": "NotFoundGroup",
+      "type": "NotFoundGroupError",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v4/*:: as any*/),
-      "type": "NotGroupHost",
+      "type": "NotGroupHostError",
       "abstractKey": null
     },
     {
@@ -177,16 +177,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "58e001742e8fcacb25ca390454385e13",
+    "cacheID": "8d09131fbc33cb75f279f49ba44f96de",
     "id": null,
     "metadata": {},
     "name": "useDeleteGroupMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteGroupMutation(\n  $input: DeleteGroupInput!\n) {\n  deleteGroup(input: $input) {\n    deletedId\n    error {\n      __typename\n      ... on NotFoundGroup {\n        message\n      }\n      ... on NotGroupHost {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteGroupMutation(\n  $input: DeleteGroupInput!\n) {\n  deleteGroup(input: $input) {\n    deletedId\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fa9534b362747869c7bb68a24c0347fd";
+(node as any).hash = "253cef5db996aca907db351b1ca943bf";
 
 export default node;

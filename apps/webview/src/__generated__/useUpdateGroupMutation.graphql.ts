@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6af088720b4d12fa908ea67e20e493b1>>
+ * @generated SignedSource<<f2520b0032b151fb854fa50627275b42>>
  * @lightSyntaxTransform
  */
 
@@ -30,19 +30,19 @@ export type useUpdateGroupMutation$variables = {
 export type useUpdateGroupMutation$data = {
   readonly updateGroup: {
     readonly error: {
-      readonly __typename: "CapacityBelowParticipants";
+      readonly __typename: "CapacityBelowParticipantsError";
       readonly message: string;
     } | {
-      readonly __typename: "GroupAlreadyClosed";
+      readonly __typename: "GroupAlreadyClosedError";
       readonly message: string;
     } | {
-      readonly __typename: "InvalidGroupInput";
+      readonly __typename: "InvalidGroupInputError";
       readonly message: string;
     } | {
-      readonly __typename: "NotFoundGroup";
+      readonly __typename: "NotFoundGroupError";
       readonly message: string;
     } | {
-      readonly __typename: "NotGroupHost";
+      readonly __typename: "NotGroupHostError";
       readonly message: string;
     } | {
       readonly __typename: "UnexpectedError";
@@ -112,31 +112,31 @@ v4 = {
     {
       "kind": "InlineFragment",
       "selections": (v3/*:: as any*/),
-      "type": "NotFoundGroup",
+      "type": "NotFoundGroupError",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v3/*:: as any*/),
-      "type": "NotGroupHost",
+      "type": "NotGroupHostError",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v3/*:: as any*/),
-      "type": "GroupAlreadyClosed",
+      "type": "GroupAlreadyClosedError",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v3/*:: as any*/),
-      "type": "InvalidGroupInput",
+      "type": "InvalidGroupInputError",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v3/*:: as any*/),
-      "type": "CapacityBelowParticipants",
+      "type": "CapacityBelowParticipantsError",
       "abstractKey": null
     },
     {
@@ -383,16 +383,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6ceb68459f13307fd29aedb7d532f658",
+    "cacheID": "d3862c9e48e8c0c7b26742e79bff2dc9",
     "id": null,
     "metadata": {},
     "name": "useUpdateGroupMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateGroupMutation(\n  $input: UpdateGroupInput!\n) {\n  updateGroup(input: $input) {\n    group {\n      id\n      ...GroupCard_group\n      ...GroupDetailHost_group\n      ...GroupDetailInfo_group\n      ...GroupDetailBody_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroup {\n        message\n      }\n      ... on NotGroupHost {\n        message\n      }\n      ... on GroupAlreadyClosed {\n        message\n      }\n      ... on InvalidGroupInput {\n        message\n      }\n      ... on CapacityBelowParticipants {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupCard_group on Group {\n  _id\n  title\n  category\n  images {\n    url\n    id\n  }\n  genderRestriction\n  meetingAt\n  capacity\n  participantCount\n  host {\n    isVerified\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailBody_group on Group {\n  title\n  content\n  images {\n    id\n    url\n  }\n}\n\nfragment GroupDetailHost_group on Group {\n  host {\n    nickname\n    isVerified\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n"
+    "text": "mutation useUpdateGroupMutation(\n  $input: UpdateGroupInput!\n) {\n  updateGroup(input: $input) {\n    group {\n      id\n      ...GroupCard_group\n      ...GroupDetailHost_group\n      ...GroupDetailInfo_group\n      ...GroupDetailBody_group\n    }\n    error {\n      __typename\n      ... on NotFoundGroupError {\n        message\n      }\n      ... on NotGroupHostError {\n        message\n      }\n      ... on GroupAlreadyClosedError {\n        message\n      }\n      ... on InvalidGroupInputError {\n        message\n      }\n      ... on CapacityBelowParticipantsError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupCard_group on Group {\n  _id\n  title\n  category\n  images {\n    url\n    id\n  }\n  genderRestriction\n  meetingAt\n  capacity\n  participantCount\n  host {\n    isVerified\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailBody_group on Group {\n  title\n  content\n  images {\n    id\n    url\n  }\n}\n\nfragment GroupDetailHost_group on Group {\n  host {\n    nickname\n    isVerified\n    admissionYear\n    college\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment GroupDetailInfo_group on Group {\n  participantCount\n  capacity\n  genderRestriction\n  recruitDeadlineAt\n  meetingAt\n  location\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0ce4a4482e3324e56f52df897685795e";
+(node as any).hash = "4b83e2d44294a8c5613590bd261a1d48";
 
 export default node;

@@ -208,7 +208,7 @@ type Group implements Node {
   """
   capacity: Int!
   """
-  현재 참여 인원 (호스트 제외)
+  현재 참여 인원 (호스트 제외, 승인 대기 제외)
   """
   participantCount: Int!
   participationMethod: ParticipationMethod!
@@ -216,7 +216,53 @@ type Group implements Node {
   status: GroupStatus!
   host: User!
   viewerRole: GroupViewerRole!
+  """
+  조회한 사람이 참여할 수 없는 이유. 성별 조건은 서버가 판단해요
+  """
+  viewerJoinRestriction: GroupJoinRestriction!
+  """
+  참여자 목록 (호스트 제외, 승인 대기 포함, 신청 순). 모집이 끝나면 서버가 승인 대기를 지워요
+  """
+  participations: [Participation!]!
   createdAt: DateTime!
+}
+
+"""
+조회한 사람의 참여 제한
+"""
+enum GroupJoinRestriction {
+  """
+  제한 없음
+  """
+  NONE
+  """
+  성별 조건이 맞지 않음
+  """
+  GENDER
+}
+
+"""
+참여 상태
+"""
+enum ParticipationStatus {
+  """
+  참여 중
+  """
+  PARTICIPATING
+  """
+  호스트 승인 대기 중
+  """
+  PENDING
+}
+
+"""
+모임 참여 신청 한 건
+"""
+type Participation implements Node {
+  id: ID!
+  user: User!
+  status: ParticipationStatus!
+  group: Group!
 }
 
 type GroupConnection {
@@ -249,6 +295,18 @@ type Mutation {
   closeGroup(input: CloseGroupInput!): CloseGroupResult!
   deleteGroup(input: DeleteGroupInput!): DeleteGroupResult!
   createImageUploadUrl(input: CreateImageUploadUrlInput!): CreateImageUploadUrlResult!
+  """
+  참여하기. 자동승인이면 바로 참여, 수동승인이면 승인 대기
+  """
+  joinGroup(input: JoinGroupInput!): JoinGroupResult!
+  """
+  참여 취소 (참여 중, 승인 대기 모두)
+  """
+  cancelParticipation(input: CancelParticipationInput!): CancelParticipationResult!
+  """
+  호스트가 승인 대기를 승인
+  """
+  approveParticipation(input: ApproveParticipationInput!): ApproveParticipationResult!
 }
 
 """
@@ -371,21 +429,21 @@ type CreateImageUploadUrlResult {
 """
 모임을 찾을 수 없음
 """
-type NotFoundGroup {
+type NotFoundGroupError {
   message: String!
 }
 
 """
 호스트만 할 수 있는 작업
 """
-type NotGroupHost {
+type NotGroupHostError {
   message: String!
 }
 
 """
 이미 마감된 모임
 """
-type GroupAlreadyClosed {
+type GroupAlreadyClosedError {
   message: String!
 }
 
@@ -405,7 +463,7 @@ enum GroupInputField {
 """
 입력값 검증 실패. field로 어느 입력이 틀렸는지 표시
 """
-type InvalidGroupInput {
+type InvalidGroupInputError {
   message: String!
   field: GroupInputField
 }
@@ -413,7 +471,7 @@ type InvalidGroupInput {
 """
 수정한 정원이 현재 참여 인원보다 적음
 """
-type CapacityBelowParticipants {
+type CapacityBelowParticipantsError {
   message: String!
   participantCount: Int!
 }
@@ -421,24 +479,107 @@ type CapacityBelowParticipants {
 """
 허용하지 않는 이미지 형식
 """
-type UnsupportedImageType {
+type UnsupportedImageTypeError {
   message: String!
 }
 
 """
 허용 용량 초과
 """
-type ImageTooLarge {
+type ImageTooLargeError {
   message: String!
   maxByteSize: Int!
 }
 
-union ErrorCreateGroup = InvalidGroupInput | UnexpectedError
+union ErrorCreateGroup = InvalidGroupInputError | UnexpectedError
 
-union ErrorUpdateGroup = NotFoundGroup | NotGroupHost | GroupAlreadyClosed | InvalidGroupInput | CapacityBelowParticipants | UnexpectedError
+union ErrorUpdateGroup = NotFoundGroupError | NotGroupHostError | GroupAlreadyClosedError | InvalidGroupInputError | CapacityBelowParticipantsError | UnexpectedError
 
-union ErrorCloseGroup = NotFoundGroup | NotGroupHost | GroupAlreadyClosed | UnexpectedError
+union ErrorCloseGroup = NotFoundGroupError | NotGroupHostError | GroupAlreadyClosedError | UnexpectedError
 
-union ErrorDeleteGroup = NotFoundGroup | NotGroupHost | UnexpectedError
+union ErrorDeleteGroup = NotFoundGroupError | NotGroupHostError | UnexpectedError
 
-union ErrorCreateImageUploadUrl = UnsupportedImageType | ImageTooLarge | UnexpectedError
+union ErrorCreateImageUploadUrl = UnsupportedImageTypeError | ImageTooLargeError | UnexpectedError
+
+input JoinGroupInput {
+  """
+  Group.id (global ID)
+  """
+  groupId: ID!
+}
+
+input CancelParticipationInput {
+  """
+  Group.id (global ID). 조회한 사람의 참여를 취소해요
+  """
+  groupId: ID!
+}
+
+input ApproveParticipationInput {
+  """
+  Participation.id (global ID)
+  """
+  participationId: ID!
+}
+
+type JoinGroupResult {
+  """
+  viewerRole이 PARTICIPANT면 참여 완료, PENDING이면 승인 대기
+  """
+  group: Group
+  error: ErrorJoinGroup
+}
+
+type CancelParticipationResult {
+  group: Group
+  error: ErrorCancelParticipation
+}
+
+type ApproveParticipationResult {
+  """
+  group으로 participantCount, status 변화를 같이 받아요
+  """
+  participation: Participation
+  error: ErrorApproveParticipation
+}
+
+"""
+이미 참여 중이거나 승인 대기 중, 또는 호스트
+"""
+type AlreadyJoinedGroupError {
+  message: String!
+}
+
+"""
+성별 조건이 맞지 않아 참여할 수 없음
+"""
+type GenderRestrictedGroupError {
+  message: String!
+}
+
+"""
+조회한 사람이 이 모임에 참여하지 않음
+"""
+type NotGroupParticipantError {
+  message: String!
+}
+
+"""
+참여 신청을 찾을 수 없음
+"""
+type NotFoundParticipationError {
+  message: String!
+}
+
+"""
+이미 승인된 참여
+"""
+type ParticipationAlreadyApprovedError {
+  message: String!
+}
+
+union ErrorJoinGroup = NotFoundGroupError | GroupAlreadyClosedError | AlreadyJoinedGroupError | GenderRestrictedGroupError | UnexpectedError
+
+union ErrorCancelParticipation = NotFoundGroupError | GroupAlreadyClosedError | NotGroupParticipantError | UnexpectedError
+
+union ErrorApproveParticipation = NotFoundParticipationError | NotGroupHostError | GroupAlreadyClosedError | ParticipationAlreadyApprovedError | UnexpectedError

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63d95500cca1462c7427c9e01fd38b05>>
+ * @generated SignedSource<<cec89cf59bbd340c6fa819c6eb863a84>>
  * @lightSyntaxTransform
  */
 
@@ -38,7 +38,7 @@ export type useCreateGroupMutation$data = {
       };
     } | null | undefined;
     readonly error: {
-      readonly __typename: "InvalidGroupInput";
+      readonly __typename: "InvalidGroupInputError";
       readonly message: string;
     } | {
       readonly __typename: "UnexpectedError";
@@ -121,7 +121,7 @@ v7 = {
     {
       "kind": "InlineFragment",
       "selections": (v6/*:: as any*/),
-      "type": "InvalidGroupInput",
+      "type": "InvalidGroupInputError",
       "abstractKey": null
     },
     {
@@ -352,16 +352,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "185d038032f4d2b8185dc8db18cd8e8d",
+    "cacheID": "9841048a71713b472c81229f777dac59",
     "id": null,
     "metadata": {},
     "name": "useCreateGroupMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    edge {\n      cursor\n      node {\n        id\n        _id\n        ...GroupCard_group\n      }\n    }\n    error {\n      __typename\n      ... on InvalidGroupInput {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupCard_group on Group {\n  _id\n  title\n  category\n  images {\n    url\n    id\n  }\n  genderRestriction\n  meetingAt\n  capacity\n  participantCount\n  host {\n    isVerified\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n"
+    "text": "mutation useCreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    edge {\n      cursor\n      node {\n        id\n        _id\n        ...GroupCard_group\n      }\n    }\n    error {\n      __typename\n      ... on InvalidGroupInputError {\n        message\n      }\n      ... on UnexpectedError {\n        message\n      }\n    }\n  }\n}\n\nfragment GroupCard_group on Group {\n  _id\n  title\n  category\n  images {\n    url\n    id\n  }\n  genderRestriction\n  meetingAt\n  capacity\n  participantCount\n  host {\n    isVerified\n    ...UserAvatar_user\n    id\n  }\n}\n\nfragment UserAvatar_user on User {\n  gender\n  profileImage {\n    url\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cbc77842ea541cbf3eb92d5050943732";
+(node as any).hash = "161aaaca6baf50265233aa95dc70fe56";
 
 export default node;

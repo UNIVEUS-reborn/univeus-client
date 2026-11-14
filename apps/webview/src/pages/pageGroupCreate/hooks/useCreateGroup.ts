@@ -24,7 +24,7 @@ export function useCreateGroup() {
         }
         error {
           __typename
-          ... on InvalidGroupInput {
+          ... on InvalidGroupInputError {
             message
           }
           ... on UnexpectedError {

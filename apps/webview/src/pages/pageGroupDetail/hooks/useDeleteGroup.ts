@@ -16,10 +16,10 @@ export function useDeleteGroup() {
         deletedId @deleteEdge(connections: $connections)
         error {
           __typename
-          ... on NotFoundGroup {
+          ... on NotFoundGroupError {
             message
           }
-          ... on NotGroupHost {
+          ... on NotGroupHostError {
             message
           }
           ... on UnexpectedError {
