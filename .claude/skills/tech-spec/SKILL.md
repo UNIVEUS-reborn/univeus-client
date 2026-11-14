@@ -37,6 +37,7 @@ argument-hint: '<도메인명>'
 
 - 페이지별 트리 (pages / common / shared 표시)
 - 새로 만드는 common·shared 컴포넌트와 그 이유
+- `pages/`에 둘 파일(훅, 변환 함수, 상수)을 common에서도 쓰는지 확인해요. common은 pages를 import할 수 없어서, 같이 쓰면 처음부터 common에 둬요
 
 ### 3-3. 데이터
 

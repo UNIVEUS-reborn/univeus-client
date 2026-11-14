@@ -39,6 +39,7 @@ verify에서 돌아온 경우 `verify.md`의 실패 항목만 고쳐요.
 - 사용자에게 보이는 문구는 legacy-spec 문구를 기준으로 써요
 - 주석을 달지 않아요
 - graphql 태그를 바꿀 때마다 `bun run relay`
+- `error.__typename`으로 분기할 에러 타입은 그 mutation의 `Error{Action}{Entity}` union에 있는지 `schema.graphql`에서 확인해요. 없는 타입을 쓰면 relay 컴파일이 실패해요
 
 단계마다 확인해요.
 
