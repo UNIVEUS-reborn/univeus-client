@@ -14,7 +14,6 @@ export function useCheckNickname() {
         }
       `,
       { nickname },
-      { fetchPolicy: 'network-only' },
     ).toPromise()
     if (data === undefined) {
       throw new Error('닉네임 확인 응답이 없어요')
