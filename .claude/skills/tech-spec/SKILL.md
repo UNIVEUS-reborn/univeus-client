@@ -31,7 +31,7 @@ argument-hint: '<도메인명>'
 | activity | route | params | step | 레거시 화면 |
 | -------- | ----- | ------ | ---- | ----------- |
 
-- 시트·모달을 activity로 만들지 `shared/Dialog`로 둘지 architecture.md 기준으로 정해요
+- 바텀시트는 activity로 만들지 않고, 페이지별로 어떤 시트가 있는지와 `useStepFlowModalState`의 modalId를 적어요 (architecture.md 라우팅)
 
 ### 3-2. 컴포넌트 트리와 분류
 
@@ -40,7 +40,7 @@ argument-hint: '<도메인명>'
 
 ### 3-3. 데이터
 
-- 페이지 query (이름, 변수, fetchPolicy)
+- 페이지 query (이름, 변수, fetchPolicy). `network-only`는 쓰지 않아요 (architecture.md Relay)
 - 컴포넌트별 fragment (이름, 필드)
 - connection key와 페이지네이션
 - mutation별: 호출 위치, `error.__typename` 분기와 각 케이스의 UI, connection 갱신 방법 (Edge / deletedId / 자동)

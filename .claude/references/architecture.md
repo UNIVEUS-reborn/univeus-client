@@ -42,7 +42,7 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 ## import 방향
 
 - `pages` → `common`, `shared` 가능
-- `common` → `shared`만 가능. `pages` import 금지
+- `common` → 다른 `common`, `shared` 가능. `pages` import 금지
 - `shared` → 다른 레이어 import 금지
 - `domain/` → 다른 `domain/`, 타입만 가능. React, Stackflow, StyleX, DOM, Relay hooks 금지 (`*.relay.ts`의 `readInlineData`만 예외)
 
@@ -84,7 +84,8 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 - params에는 ID만 넘겨요. 큰 데이터를 넘기지 않아요
 - 여러 단계 화면(가입, 모임 작성)은 activity 하나 + step으로 만들어요
 - 하단 탭은 `Main` activity 하나 안에서 전환해요
-- 뒤로가기로 닫혀야 하는 시트·모달은 activity로, 짧은 확인 모달은 `shared/Dialog`로 만들어요
+- 바텀시트는 activity로 만들지 않아요. 페이지 안에서 `shared/BottomSheet`를 렌더하고, 열림 상태는 `useStepFlowModalState(activityName, modalId)`로 step params에 둬요. 뒤로가기를 누르면 시트만 닫혀요
+- 시트에서 다음 시트로 넘길 때는 `await close()` 뒤에 `open()`해요
 
 ## Relay
 
@@ -93,7 +94,8 @@ __generated__/ Relay 생성 파일 (수정 금지, 커밋함)
 - mutation 결과는 Result 래퍼예요. `error.__typename`으로 분기하고, 성공 피드백은 `onCompleted`에서 결과를 확인한 뒤에만 보여줘요
 - 목록에 추가는 Edge, 삭제는 `deletedId`로 connection을 갱신해요
 - optimisticResponse에 fragment 데이터를 spread하지 않아요
-- 페이지마다 Suspense 경계를 둬요 (React 19 StrictMode의 network-only 반복 요청 방지)
+- 페이지마다 Suspense 경계를 둬요
+- `fetchPolicy: 'network-only'`는 쓰지 않아요. React 19 StrictMode가 Suspense 내용이 다시 보일 때 effect를 다시 실행하고, Relay가 그때마다 새로 요청하면서 무한 요청이 생겨요 (facebook/react#30799). 최신 값이 필요하면 `store-and-network`를 써요
 - graphql 태그를 수정하면 바로 `bun run relay`를 실행하고, 필드·enum은 `schema.graphql`에서 확인해요
 - 서버가 없는 동안은 mock network가 `schema.graphql` 기준으로 응답해요
 
